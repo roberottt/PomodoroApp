@@ -11,6 +11,11 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import type { InsertCalendarEvent } from "@shared/schema";
 
+const formatDateTimeLocal = (date: Date): string => {
+  const pad = (num: number) => num.toString().padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+};
+
 interface EventModalProps {
   isOpen: boolean;
   onClose: () => void;
