@@ -1,0 +1,155 @@
+/* Font import for Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(210, 40%, 20%);
+  --muted: hsl(210, 40%, 98%);
+  --muted-foreground: hsl(215, 16%, 47%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(210, 40%, 20%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(210, 40%, 20%);
+  --border: hsl(214, 32%, 91%);
+  --input: hsl(214, 32%, 91%);
+  --primary: hsl(351, 92%, 77%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(210, 40%, 98%);
+  --secondary-foreground: hsl(215, 16%, 47%);
+  --accent: hsl(210, 40%, 98%);
+  --accent-foreground: hsl(215, 16%, 47%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --ring: hsl(210, 40%, 20%);
+  --radius: 0.5rem;
+  
+  /* Custom colors */
+  --coral: hsl(351, 92%, 77%);
+  --pink: hsl(351, 100%, 85%);
+  --sage: hsl(140, 55%, 79%);
+  --mint: hsl(135, 69%, 85%);
+  --peach: hsl(35, 100%, 83%);
+  --sunny: hsl(53, 100%, 82%);
+  --charcoal: hsl(210, 40%, 20%);
+  --warmGray: hsl(0, 0%, 96%);
+}
+
+.dark {
+  --background: hsl(210, 40%, 7%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(210, 40%, 15%);
+  --muted-foreground: hsl(215, 16%, 65%);
+  --popover: hsl(210, 40%, 7%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(210, 40%, 7%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(210, 40%, 15%);
+  --input: hsl(210, 40%, 15%);
+  --primary: hsl(351, 92%, 77%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(210, 40%, 15%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(210, 40%, 15%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62%, 30%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(212, 12%, 84%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-inter antialiased bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-coral {
+    color: var(--coral);
+  }
+  
+  .text-pink {
+    color: var(--pink);
+  }
+  
+  .text-sage {
+    color: var(--sage);
+  }
+  
+  .text-mint {
+    color: var(--mint);
+  }
+  
+  .text-peach {
+    color: var(--peach);
+  }
+  
+  .text-sunny {
+    color: var(--sunny);
+  }
+  
+  .text-charcoal {
+    color: var(--charcoal);
+  }
+  
+  .bg-coral {
+    background-color: var(--coral);
+  }
+  
+  .bg-pink {
+    background-color: var(--pink);
+  }
+  
+  .bg-sage {
+    background-color: var(--sage);
+  }
+  
+  .bg-mint {
+    background-color: var(--mint);
+  }
+  
+  .bg-peach {
+    background-color: var(--peach);
+  }
+  
+  .bg-sunny {
+    background-color: var(--sunny);
+  }
+  
+  .bg-charcoal {
+    background-color: var(--charcoal);
+  }
+  
+  .bg-warmGray {
+    background-color: var(--warmGray);
+  }
+}
+
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--warmGray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--coral);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pink);
+}
