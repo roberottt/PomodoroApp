@@ -1,0 +1,81 @@
+Hello! I need you to create a full-stack web application for studying, inspired by the Pomodoro Technique. The primary goal is to build a robust, user-friendly, and aesthetically pleasing tool that helps students organize their tasks, track their progress, and stay focused.
+
+The application should be built with a modern tech stack, initially prepared for deployment on Vercel.
+
+Here are the core technical and feature requirements:
+
+1. Core Technology & Architecture:
+
+Frontend: Please use a modern framework like React (with Vite) or Next.js. Style it using Tailwind CSS for a clean, responsive, and customizable design.
+
+Backend & Database: Use Firebase as the backend. Specifically, implement:
+
+Firebase Authentication: For user sign-up and login, exclusively through Google OAuth.
+
+Firestore Database: To store all user data (tasks, study sessions, settings, etc.). The data must be tied to the user's Google account, ensuring seamless synchronization across multiple devices. When a user logs in from any device, their data should be instantly available.
+
+2. Key Features:
+
+A. User-Centric Dashboard:
+
+Upcoming Tasks: A clear, visible section on the main dashboard that shows the most immediate tasks and deadlines.
+
+Daily/Weekly Planner: A comprehensive task list where users can plan their entire week. The app should send reminders for planned activities.
+
+B. Calendar Integration:
+
+Implement a full-screen monthly calendar view.
+
+Users should be able to add, view, and edit deadlines, exams, and important study events directly on the calendar.
+
+Crucially, explore the possibility of connecting to the user's primary Google Calendar to sync events. This would allow them to see their mobile calendar events within the app.
+
+C. Customizable Pomodoro Timer:
+
+A central feature of the app.
+
+Users must be able to adjust the duration of both study sessions (pomodoros) and break times (short and long breaks).
+
+Ambient Sounds: Integrate a list of background sounds to help with concentration during study sessions. Include options like:
+
+Ocean waves
+
+White noise
+
+Birdsong
+
+Rainfall
+
+A quiet library
+
+Aesthetics: The Pomodoro timer interface should be visually engaging. Please use cute, appealing backgrounds (e.g., animated illustrations, cozy scenes, beautiful landscapes). The overall UI should have a "cuqui" (cute/charming) feel.
+
+D. Analytics and Reporting:
+
+A dedicated "Reports" section.
+
+Generate daily, weekly, and monthly reports that visualize:
+
+Total hours studied.
+
+Performance metrics (e.g., tasks completed vs. planned).
+
+Concentration patterns (e.g., number of Pomodoro sessions completed).
+
+E. Mood Tracker:
+
+The app should gently prompt the user once a day with a question like, "How are you feeling today?".
+
+Provide simple options for them to log their mood (e.g., using emojis: 😊, 🙂, 😐, 😕, 😞).
+
+The analytics dashboard should include a chart showing the user's general mood trend over time.
+
+F. Study Schedule & Goals:
+
+A settings area where users can define their ideal study schedule.
+
+They should be able to set target study hours for each day and mark specific days as "off" (e.g., Sunday).
+
+The app should use this schedule to avoid sending notifications on rest days and to help the user track their progress toward their weekly study goals.
+
+Please structure the code logically, with clear components and comments, making it easy to understand and maintain. Thank you!
