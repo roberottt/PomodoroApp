@@ -14,11 +14,19 @@ export const TaskManager = () => {
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: tasks = [], isLoading } = useQuery({
+  const { data: tasks = [], isLoading, error } = useQuery({
     queryKey: ["/api/tasks", user?.uid],
     queryFn: () => getUserTasks(user!.uid),
     enabled: !!user?.uid,
+    retry: 3,
+    retryDelay: 1000,
   });
+
+  // Add debugging
+  console.log("TaskManager - User ID:", user?.uid);
+  console.log("TaskManager - Tasks:", tasks);
+  console.log("TaskManager - Loading:", isLoading);
+  console.log("TaskManager - Error:", error);
 
   const updateTaskMutation = useMutation({
     mutationFn: ({ taskId, updates }: { taskId: string; updates: Partial<Task> }) =>

@@ -39,27 +39,63 @@ const convertTimestamps = (data: any) => {
 
 // Tasks
 export const createTask = async (userId: string, task: Omit<InsertTask, 'userId'>) => {
-  const taskData = {
-    ...task,
-    userId,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-  const docRef = await addDoc(collection(db, "tasks"), taskData);
-  return { id: docRef.id, ...taskData };
+  try {
+    console.log("Creating task for user:", userId, "with data:", task);
+    const taskData = {
+      ...task,
+      userId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    console.log("Task data to save:", taskData);
+    const docRef = await addDoc(collection(db, "tasks"), taskData);
+    console.log("Task created successfully with ID:", docRef.id);
+    return { id: docRef.id, ...taskData };
+  } catch (error) {
+    console.error("Error creating task:", error);
+    throw error;
+  }
 };
 
 export const getUserTasks = async (userId: string): Promise<Task[]> => {
-  const q = query(
-    collection(db, "tasks"), 
-    where("userId", "==", userId),
-    orderBy("createdAt", "desc")
-  );
-  const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...convertTimestamps(doc.data())
-  })) as Task[];
+  try {
+    console.log("Fetching tasks for user:", userId);
+    const q = query(
+      collection(db, "tasks"), 
+      where("userId", "==", userId),
+      orderBy("createdAt", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    console.log("Found", querySnapshot.docs.length, "tasks");
+    const tasks = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...convertTimestamps(doc.data())
+    })) as Task[];
+    console.log("Processed tasks:", tasks);
+    return tasks;
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+    // If orderBy fails due to missing index, try without it
+    try {
+      console.log("Retrying without orderBy...");
+      const q = query(
+        collection(db, "tasks"), 
+        where("userId", "==", userId)
+      );
+      const querySnapshot = await getDocs(q);
+      console.log("Found", querySnapshot.docs.length, "tasks (no orderBy)");
+      const tasks = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...convertTimestamps(doc.data())
+      })) as Task[];
+      console.log("Returning fallback tasks:", tasks);
+      return tasks;
+    } catch (fallbackError) {
+      console.error("Fallback query also failed:", fallbackError);
+      // Return empty array instead of throwing to prevent UI crashes
+      return [];
+    }
+  }
 };
 
 export const updateTask = async (taskId: string, updates: Partial<Task>) => {
