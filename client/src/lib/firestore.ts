@@ -208,16 +208,46 @@ export const createCalendarEvent = async (userId: string, event: Omit<InsertCale
 };
 
 export const getUserCalendarEvents = async (userId: string): Promise<CalendarEvent[]> => {
-  const q = query(
-    collection(db, "calendarEvents"), 
-    where("userId", "==", userId),
-    orderBy("startDate", "asc")
-  );
-  const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...convertTimestamps(doc.data())
-  })) as CalendarEvent[];
+  try {
+    console.log("Fetching calendar events for user:", userId);
+    const q = query(
+      collection(db, "calendarEvents"), 
+      where("userId", "==", userId),
+      orderBy("startDate", "asc")
+    );
+    const querySnapshot = await getDocs(q);
+    console.log("Found", querySnapshot.docs.length, "calendar events");
+    const events = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...convertTimestamps(doc.data())
+    })) as CalendarEvent[];
+    console.log("Processed calendar events:", events);
+    return events;
+  } catch (error) {
+    console.error("Error fetching calendar events:", error);
+    // If orderBy fails due to missing index, try without it
+    try {
+      console.log("Retrying calendar events without orderBy...");
+      const q = query(
+        collection(db, "calendarEvents"), 
+        where("userId", "==", userId)
+      );
+      const querySnapshot = await getDocs(q);
+      console.log("Found", querySnapshot.docs.length, "calendar events (no orderBy)");
+      const events = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...convertTimestamps(doc.data())
+      })) as CalendarEvent[];
+      // Sort manually by startDate
+      events.sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
+      console.log("Returning fallback calendar events:", events);
+      return events;
+    } catch (fallbackError) {
+      console.error("Fallback calendar events query also failed:", fallbackError);
+      // Return empty array instead of throwing to prevent UI crashes
+      return [];
+    }
+  }
 };
 
 export const updateCalendarEvent = async (eventId: string, updates: Partial<CalendarEvent>) => {
