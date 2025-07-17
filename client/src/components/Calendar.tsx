@@ -4,12 +4,14 @@ import { useAuth } from "@/hooks/useAuth";
 import { getUserCalendarEvents } from "@/lib/firestore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, ChevronLeft, ChevronRight, Edit } from "lucide-react";
+import { CalendarDays, ChevronLeft, ChevronRight, Edit, Plus } from "lucide-react";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay } from "date-fns";
+import { EventModal } from "./EventModal";
 
 export const Calendar = () => {
   const { user } = useAuth();
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [isEventModalOpen, setIsEventModalOpen] = useState(false);
 
   const { data: events = [] } = useQuery({
     queryKey: ["/api/calendar-events", user?.uid],
@@ -47,6 +49,13 @@ export const Calendar = () => {
             Calendar
           </CardTitle>
           <div className="flex items-center space-x-4">
+            <Button
+              onClick={() => setIsEventModalOpen(true)}
+              className="bg-gradient-to-r from-coral to-pink text-white px-4 py-2 rounded-xl hover:shadow-lg transition-shadow flex items-center space-x-2"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Event</span>
+            </Button>
             <Button
               variant="ghost"
               size="icon"
@@ -151,6 +160,11 @@ export const Calendar = () => {
           </div>
         </div>
       </CardContent>
+      
+      <EventModal 
+        isOpen={isEventModalOpen} 
+        onClose={() => setIsEventModalOpen(false)} 
+      />
     </Card>
   );
 };
