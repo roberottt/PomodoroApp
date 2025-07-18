@@ -41,7 +41,10 @@ export const MoodTracker = () => {
 
   // Check if user has logged mood today
   const today = new Date().toDateString();
-  const todayMood = moods.find(mood => mood.date.toDateString() === today);
+  const todayMood = moods.find(mood => {
+    const moodDate = mood.date instanceof Date ? mood.date : new Date(mood.date);
+    return moodDate.toDateString() === today;
+  });
 
   useEffect(() => {
     if (todayMood) {

@@ -33,6 +33,12 @@ const convertTimestamps = (data: any) => {
   Object.keys(converted).forEach(key => {
     if (converted[key] instanceof Timestamp) {
       converted[key] = converted[key].toDate();
+    } else if (converted[key] && typeof converted[key] === 'object' && converted[key].type === 'firestore/timestamp/1.0') {
+      // Handle serialized Firestore timestamps
+      converted[key] = new Date(converted[key].seconds * 1000 + converted[key].nanoseconds / 1000000);
+    } else if (converted[key] && typeof converted[key] === 'object' && converted[key].seconds) {
+      // Handle Firestore timestamp objects
+      converted[key] = new Date(converted[key].seconds * 1000);
     }
   });
   return converted;
@@ -188,16 +194,42 @@ export const createMood = async (userId: string, mood: Omit<InsertMood, 'userId'
 };
 
 export const getUserMoods = async (userId: string): Promise<Mood[]> => {
-  const q = query(
-    collection(db, "moods"), 
-    where("userId", "==", userId),
-    orderBy("date", "desc")
-  );
-  const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...convertTimestamps(doc.data())
-  })) as Mood[];
+  try {
+    const q = query(
+      collection(db, "moods"), 
+      where("userId", "==", userId),
+      orderBy("date", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...convertTimestamps(doc.data())
+    })) as Mood[];
+  } catch (error) {
+    console.error("Error fetching moods:", error);
+    // Fallback without orderBy
+    try {
+      console.log("Retrying moods without orderBy...");
+      const fallbackQ = query(
+        collection(db, "moods"),
+        where("userId", "==", userId)
+      );
+      const fallbackSnapshot = await getDocs(fallbackQ);
+      const moods = fallbackSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...convertTimestamps(doc.data())
+      })) as Mood[];
+      
+      // Sort manually by date descending
+      moods.sort((a, b) => b.date.getTime() - a.date.getTime());
+      
+      console.log("Returning fallback moods:", moods);
+      return moods;
+    } catch (fallbackError) {
+      console.error("Fallback moods query also failed:", fallbackError);
+      return [];
+    }
+  }
 };
 
 // Settings
