@@ -216,7 +216,7 @@ export const Settings = () => {
                   Número de Sesiones Pomodoro
                 </Label>
                 <Select
-                  value={settings.sessionCount.toString()}
+                  value={(settings.sessionCount || 4).toString()}
                   onValueChange={(value) => setSettings({ ...settings, sessionCount: parseInt(value) })}
                 >
                   <SelectTrigger className="w-full mt-1 border-pink-200 focus:ring-coral rounded-xl">
@@ -246,7 +246,7 @@ export const Settings = () => {
                   Meta de Estudio Diaria
                 </Label>
                 <Select
-                  value={settings.dailyGoal.toString()}
+                  value={(settings.dailyGoal || 4).toString()}
                   onValueChange={(value) => setSettings({ ...settings, dailyGoal: parseInt(value) })}
                 >
                   <SelectTrigger className="w-full mt-1 border-pink-200 focus:ring-coral rounded-xl">
