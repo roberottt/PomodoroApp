@@ -149,9 +149,51 @@ export const Calendar = () => {
           })()}
         </div>
 
+        {/* Today's Events */}
+        <div className="mb-8">
+          <h4 className="text-lg font-semibold text-charcoal mb-4">Eventos de Hoy</h4>
+          <div className="space-y-3">
+            {(() => {
+              const todaysEvents = events.filter(event => isSameDay(event.startDate, new Date()));
+              
+              if (todaysEvents.length === 0) {
+                return (
+                  <div className="text-center py-4 text-gray-500">
+                    <CalendarDays className="w-8 h-8 mx-auto mb-2 text-gray-300" />
+                    <p>No hay eventos para hoy</p>
+                  </div>
+                );
+              }
+              
+              return todaysEvents.map((event) => (
+                <div
+                  key={event.id}
+                  className="flex items-center space-x-4 p-4 bg-gradient-to-r from-coral/20 to-pink/20 rounded-2xl border border-coral/30"
+                >
+                  <div className="w-3 h-3 bg-coral rounded-full" />
+                  <div className="flex-1">
+                    <h5 className="font-medium text-charcoal">{event.title}</h5>
+                    <p className="text-sm text-gray-600">
+                      {format(event.startDate, "h:mm a")}
+                      {event.description && ` - ${event.description}`}
+                    </p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-coral hover:text-coral/80"
+                  >
+                    <Edit className="w-4 h-4" />
+                  </Button>
+                </div>
+              ));
+            })()}
+          </div>
+        </div>
+
         {/* Upcoming Events */}
         <div>
-          <h4 className="text-lg font-semibold text-charcoal mb-4">Próximos Eventos</h4>
+          <h4 className="text-lg font-semibold text-charcoal mb-4">Próximos Eventos</h4></div>
           <div className="space-y-3">
             {upcomingEvents.length === 0 ? (
               <div className="text-center py-4 text-gray-500">
