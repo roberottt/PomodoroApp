@@ -10,6 +10,13 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || "demo-app-id",
 };
 
+// Debug logging - remove after testing
+console.log("Firebase config:", {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY ? "Set" : "Not set",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "Not set",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID ? "Set" : "Not set"
+});
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
