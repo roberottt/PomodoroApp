@@ -117,20 +117,20 @@ export const TaskManager = () => {
             </div>
           ) : (
             incompleteTasks.map((task) => (
-              <div key={task.id} className="flex items-center justify-between p-4 bg-warmGray rounded-2xl">
-                <div className="flex items-center space-x-3">
+              <div key={task.id} className="flex items-start sm:items-center justify-between p-3 sm:p-4 bg-warmGray rounded-2xl">
+                <div className="flex items-start sm:items-center space-x-3 flex-1 min-w-0">
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => toggleTaskCompletion(task)}
-                    className="text-coral hover:bg-coral/10"
+                    className="text-coral hover:bg-coral/10 mt-1 sm:mt-0 flex-shrink-0"
                   >
                     <Circle className="w-5 h-5" />
                   </Button>
-                  <div>
-                    <h4 className="font-medium text-charcoal">{task.title}</h4>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="font-medium text-sm sm:text-base text-charcoal break-words">{task.title}</h4>
                     {task.description && (
-                      <p className="text-sm text-gray-600">{task.description}</p>
+                      <p className="text-xs sm:text-sm text-gray-600 break-words">{task.description}</p>
                     )}
                   </div>
                 </div>
@@ -142,7 +142,7 @@ export const TaskManager = () => {
                     variant="ghost"
                     size="icon"
                     onClick={() => deleteTaskMutation.mutate(task.id)}
-                    className="text-red-500 hover:bg-red-50"
+                    className="text-red-500 hover:bg-red-50 flex-shrink-0"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
@@ -164,20 +164,20 @@ export const TaskManager = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             {completedTasks.map((task) => (
-              <div key={task.id} className="flex items-center justify-between p-4 bg-sage/10 rounded-2xl">
-                <div className="flex items-center space-x-3">
+              <div key={task.id} className="flex items-start sm:items-center justify-between p-3 sm:p-4 bg-sage/10 rounded-2xl">
+                <div className="flex items-start sm:items-center space-x-3 flex-1 min-w-0">
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => toggleTaskCompletion(task)}
-                    className="text-sage hover:bg-sage/10"
+                    className="text-sage hover:bg-sage/10 mt-1 sm:mt-0 flex-shrink-0"
                   >
                     <CheckCircle className="w-5 h-5" />
                   </Button>
-                  <div>
-                    <h4 className="font-medium text-charcoal line-through">{task.title}</h4>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="font-medium text-sm sm:text-base text-charcoal line-through break-words">{task.title}</h4>
                     {task.description && (
-                      <p className="text-sm text-gray-600 line-through">{task.description}</p>
+                      <p className="text-xs sm:text-sm text-gray-600 line-through break-words">{task.description}</p>
                     )}
                   </div>
                 </div>
@@ -185,7 +185,7 @@ export const TaskManager = () => {
                   variant="ghost"
                   size="icon"
                   onClick={() => deleteTaskMutation.mutate(task.id)}
-                  className="text-red-500 hover:bg-red-50"
+                  className="text-red-500 hover:bg-red-50 flex-shrink-0"
                 >
                   <Trash2 className="w-4 h-4" />
                 </Button>

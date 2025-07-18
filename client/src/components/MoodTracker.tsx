@@ -84,14 +84,14 @@ export const MoodTracker = () => {
             </p>
           </div>
         ) : (
-          <div className="flex justify-center space-x-3">
+          <div className="flex justify-center gap-2 sm:gap-3 flex-wrap">
             {moodOptions.map((option) => (
               <Button
                 key={option.value}
                 variant="ghost"
                 size="lg"
                 onClick={() => handleMoodSelect(option.value)}
-                className={`text-3xl hover:scale-110 transition-transform p-3 ${
+                className={`text-2xl sm:text-3xl hover:scale-110 transition-transform p-2 sm:p-3 ${
                   selectedMood === option.value ? "ring-2 ring-coral" : ""
                 }`}
                 disabled={createMoodMutation.isPending}

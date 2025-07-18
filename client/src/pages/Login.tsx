@@ -8,18 +8,18 @@ export const Login = () => {
   const { login, loading, error } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-peach-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-peach-50 flex items-center justify-center p-2 sm:p-4">
       <div className="w-full max-w-md">
         <Card className="rounded-3xl shadow-2xl border-pink-100 overflow-hidden">
-          <CardHeader className="bg-gradient-to-r from-coral to-pink text-white text-center py-8">
-            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Brain className="w-8 h-8 text-white" />
+          <CardHeader className="bg-gradient-to-r from-coral to-pink text-white text-center py-6 sm:py-8">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
             </div>
-            <CardTitle className="text-3xl font-bold">StudyBuddy</CardTitle>
-            <p className="text-lg opacity-90 mt-2">Tu Adorable Compañero de Estudio Pomodoro</p>
+            <CardTitle className="text-2xl sm:text-3xl font-bold">StudyBuddy</CardTitle>
+            <p className="text-base sm:text-lg opacity-90 mt-2 px-2">Tu Adorable Compañero de Estudio Pomodoro</p>
           </CardHeader>
           
-          <CardContent className="p-8">
+          <CardContent className="p-4 sm:p-6 lg:p-8">
             <div className="space-y-6">
               {/* Features */}
               <div className="space-y-4">

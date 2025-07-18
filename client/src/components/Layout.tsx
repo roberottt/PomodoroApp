@@ -14,19 +14,19 @@ export const Layout = ({ children }: LayoutProps) => {
     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-peach-50">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-pink-100 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-coral to-pink rounded-full flex items-center justify-center">
-                <Brain className="text-white w-4 h-4" />
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+          <div className="flex justify-between items-center h-14 sm:h-16">
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-coral to-pink rounded-full flex items-center justify-center">
+                <Brain className="text-white w-3 h-3 sm:w-4 sm:h-4" />
               </div>
-              <h1 className="text-xl font-bold text-charcoal">StudyBuddy</h1>
+              <h1 className="text-lg sm:text-xl font-bold text-charcoal">StudyBuddy</h1>
             </div>
             
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden sm:flex space-x-4 lg:space-x-8">
               <button 
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="text-charcoal hover:text-coral transition-colors font-medium"
+                className="text-charcoal hover:text-coral transition-colors font-medium text-sm lg:text-base"
               >
                 Panel
               </button>
@@ -35,7 +35,7 @@ export const Layout = ({ children }: LayoutProps) => {
                   const timerElement = document.querySelector('[data-section="timer"]');
                   timerElement?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="text-charcoal hover:text-coral transition-colors font-medium"
+                className="text-charcoal hover:text-coral transition-colors font-medium text-sm lg:text-base"
               >
                 Temporizador
               </button>
@@ -85,7 +85,7 @@ export const Layout = ({ children }: LayoutProps) => {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8">
         {children}
       </main>
     </div>
