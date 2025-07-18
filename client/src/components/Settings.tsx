@@ -26,6 +26,12 @@ export const Settings = () => {
     notifications: true,
   });
 
+  const [inputValues, setInputValues] = useState({
+    workDuration: "25",
+    shortBreakDuration: "5",
+    longBreakDuration: "15",
+  });
+
   const { data: userSettings } = useQuery({
     queryKey: ["/api/settings", user?.uid],
     queryFn: () => getUserSettings(user!.uid),
@@ -67,11 +73,60 @@ export const Settings = () => {
         restDays: userSettings.restDays,
         notifications: userSettings.notifications,
       });
+      setInputValues({
+        workDuration: userSettings.workDuration.toString(),
+        shortBreakDuration: userSettings.shortBreakDuration.toString(),
+        longBreakDuration: userSettings.longBreakDuration.toString(),
+      });
     }
   }, [userSettings]);
 
+  const validateInputs = () => {
+    const workDuration = parseInt(inputValues.workDuration);
+    const shortBreakDuration = parseInt(inputValues.shortBreakDuration);
+    const longBreakDuration = parseInt(inputValues.longBreakDuration);
+
+    if (isNaN(workDuration) || workDuration < 1 || workDuration > 120) {
+      toast({
+        title: "Error de validación",
+        description: "La duración del trabajo debe ser entre 1 y 120 minutos.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    if (isNaN(shortBreakDuration) || shortBreakDuration < 1 || shortBreakDuration > 60) {
+      toast({
+        title: "Error de validación",
+        description: "La duración del descanso corto debe ser entre 1 y 60 minutos.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    if (isNaN(longBreakDuration) || longBreakDuration < 1 || longBreakDuration > 120) {
+      toast({
+        title: "Error de validación",
+        description: "La duración del descanso largo debe ser entre 1 y 120 minutos.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSave = () => {
-    updateSettingsMutation.mutate(settings);
+    if (!validateInputs()) return;
+
+    const updatedSettings = {
+      ...settings,
+      workDuration: parseInt(inputValues.workDuration),
+      shortBreakDuration: parseInt(inputValues.shortBreakDuration),
+      longBreakDuration: parseInt(inputValues.longBreakDuration),
+    };
+
+    updateSettingsMutation.mutate(updatedSettings);
   };
 
   const handleRestDayToggle = (day: string, checked: boolean) => {
@@ -115,18 +170,8 @@ export const Settings = () => {
                   type="number"
                   min="1"
                   max="120"
-                  value={settings.workDuration}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value === '') {
-                      setSettings({ ...settings, workDuration: 1 });
-                    } else {
-                      const numValue = parseInt(value);
-                      if (!isNaN(numValue) && numValue >= 1 && numValue <= 120) {
-                        setSettings({ ...settings, workDuration: numValue });
-                      }
-                    }
-                  }}
+                  value={inputValues.workDuration}
+                  onChange={(e) => setInputValues({ ...inputValues, workDuration: e.target.value })}
                   className="w-full mt-1 px-3 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
                   placeholder="25"
                 />
@@ -141,18 +186,8 @@ export const Settings = () => {
                   type="number"
                   min="1"
                   max="60"
-                  value={settings.shortBreakDuration}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value === '') {
-                      setSettings({ ...settings, shortBreakDuration: 1 });
-                    } else {
-                      const numValue = parseInt(value);
-                      if (!isNaN(numValue) && numValue >= 1 && numValue <= 60) {
-                        setSettings({ ...settings, shortBreakDuration: numValue });
-                      }
-                    }
-                  }}
+                  value={inputValues.shortBreakDuration}
+                  onChange={(e) => setInputValues({ ...inputValues, shortBreakDuration: e.target.value })}
                   className="w-full mt-1 px-3 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
                   placeholder="5"
                 />
@@ -167,18 +202,8 @@ export const Settings = () => {
                   type="number"
                   min="1"
                   max="120"
-                  value={settings.longBreakDuration}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value === '') {
-                      setSettings({ ...settings, longBreakDuration: 1 });
-                    } else {
-                      const numValue = parseInt(value);
-                      if (!isNaN(numValue) && numValue >= 1 && numValue <= 120) {
-                        setSettings({ ...settings, longBreakDuration: numValue });
-                      }
-                    }
-                  }}
+                  value={inputValues.longBreakDuration}
+                  onChange={(e) => setInputValues({ ...inputValues, longBreakDuration: e.target.value })}
                   className="w-full mt-1 px-3 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
                   placeholder="15"
                 />
