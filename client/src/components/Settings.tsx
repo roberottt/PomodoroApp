@@ -116,7 +116,17 @@ export const Settings = () => {
                   min="1"
                   max="120"
                   value={settings.workDuration}
-                  onChange={(e) => setSettings({ ...settings, workDuration: parseInt(e.target.value) || 1 })}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '') {
+                      setSettings({ ...settings, workDuration: 1 });
+                    } else {
+                      const numValue = parseInt(value);
+                      if (!isNaN(numValue) && numValue >= 1 && numValue <= 120) {
+                        setSettings({ ...settings, workDuration: numValue });
+                      }
+                    }
+                  }}
                   className="w-full mt-1 px-3 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
                   placeholder="25"
                 />
@@ -132,7 +142,17 @@ export const Settings = () => {
                   min="1"
                   max="60"
                   value={settings.shortBreakDuration}
-                  onChange={(e) => setSettings({ ...settings, shortBreakDuration: parseInt(e.target.value) || 1 })}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '') {
+                      setSettings({ ...settings, shortBreakDuration: 1 });
+                    } else {
+                      const numValue = parseInt(value);
+                      if (!isNaN(numValue) && numValue >= 1 && numValue <= 60) {
+                        setSettings({ ...settings, shortBreakDuration: numValue });
+                      }
+                    }
+                  }}
                   className="w-full mt-1 px-3 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
                   placeholder="5"
                 />
@@ -148,7 +168,17 @@ export const Settings = () => {
                   min="1"
                   max="120"
                   value={settings.longBreakDuration}
-                  onChange={(e) => setSettings({ ...settings, longBreakDuration: parseInt(e.target.value) || 1 })}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '') {
+                      setSettings({ ...settings, longBreakDuration: 1 });
+                    } else {
+                      const numValue = parseInt(value);
+                      if (!isNaN(numValue) && numValue >= 1 && numValue <= 120) {
+                        setSettings({ ...settings, longBreakDuration: numValue });
+                      }
+                    }
+                  }}
                   className="w-full mt-1 px-3 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
                   placeholder="15"
                 />
