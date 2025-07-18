@@ -37,8 +37,8 @@ export const EventModal = ({ isOpen, onClose }: EventModalProps) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/calendar-events", user?.uid] });
       toast({
-        title: "Success",
-        description: "Event created successfully!",
+        title: "Éxito",
+        description: "¡Evento creado exitosamente!",
       });
       onClose();
       setFormData({
@@ -51,7 +51,7 @@ export const EventModal = ({ isOpen, onClose }: EventModalProps) => {
     onError: (error) => {
       toast({
         title: "Error",
-        description: "Failed to create event. Please try again.",
+        description: "Error al crear el evento. Por favor, inténtalo de nuevo.",
         variant: "destructive",
       });
     },
@@ -62,7 +62,7 @@ export const EventModal = ({ isOpen, onClose }: EventModalProps) => {
     if (!formData.title.trim()) {
       toast({
         title: "Error",
-        description: "Please enter an event title.",
+        description: "Por favor, ingresa un título para el evento.",
         variant: "destructive",
       });
       return;
@@ -83,38 +83,38 @@ export const EventModal = ({ isOpen, onClose }: EventModalProps) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md rounded-3xl">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-charcoal">Add New Event</DialogTitle>
+          <DialogTitle className="text-xl font-bold text-charcoal">Agregar Nuevo Evento</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label htmlFor="title" className="text-sm font-medium text-gray-700">
-              Event Title
+              Título del Evento
             </Label>
             <Input
               id="title"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              placeholder="Enter event title"
+              placeholder="Ingresa el título del evento"
               className="mt-1 border-pink-200 focus:ring-coral focus:border-coral rounded-xl"
             />
           </div>
           
           <div>
             <Label htmlFor="description" className="text-sm font-medium text-gray-700">
-              Description
+              Descripción
             </Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Event description"
+              placeholder="Descripción del evento"
               className="mt-1 border-pink-200 focus:ring-coral focus:border-coral rounded-xl h-20"
             />
           </div>
           
           <div>
             <Label htmlFor="startDate" className="text-sm font-medium text-gray-700">
-              Start Date & Time
+              Fecha y Hora de Inicio
             </Label>
             <Input
               id="startDate"
@@ -127,7 +127,7 @@ export const EventModal = ({ isOpen, onClose }: EventModalProps) => {
 
           <div>
             <Label htmlFor="endDate" className="text-sm font-medium text-gray-700">
-              End Date & Time
+              Fecha y Hora de Fin
             </Label>
             <Input
               id="endDate"
@@ -145,14 +145,14 @@ export const EventModal = ({ isOpen, onClose }: EventModalProps) => {
               onClick={onClose}
               className="text-gray-600 hover:text-gray-800"
             >
-              Cancel
+              Cancelar
             </Button>
             <Button
               type="submit"
               disabled={createEventMutation.isPending}
               className="bg-gradient-to-r from-coral to-pink text-white px-6 py-2 rounded-xl hover:shadow-lg transition-shadow"
             >
-              {createEventMutation.isPending ? "Adding..." : "Add Event"}
+              {createEventMutation.isPending ? "Agregando..." : "Agregar Evento"}
             </Button>
           </div>
         </form>
