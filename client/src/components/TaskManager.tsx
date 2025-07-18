@@ -63,6 +63,19 @@ export const TaskManager = () => {
     }
   };
 
+  const translatePriority = (priority: string) => {
+    switch (priority) {
+      case "high":
+        return "alta";
+      case "medium":
+        return "media";
+      case "low":
+        return "baja";
+      default:
+        return priority;
+    }
+  };
+
   const incompleteTasks = tasks.filter(task => !task.completed);
   const completedTasks = tasks.filter(task => task.completed);
 
@@ -79,12 +92,12 @@ export const TaskManager = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h3 className="text-xl font-bold text-charcoal">Task Manager</h3>
+        <h3 className="text-xl font-bold text-charcoal">Gestor de Tareas</h3>
         <Button
           onClick={() => setIsModalOpen(true)}
           className="bg-gradient-to-r from-coral to-pink text-white rounded-2xl hover:shadow-lg transition-shadow"
         >
-          Add Task
+          Agregar Tarea
         </Button>
       </div>
 
@@ -93,14 +106,14 @@ export const TaskManager = () => {
         <CardHeader>
           <CardTitle className="flex items-center text-charcoal">
             <Circle className="w-5 h-5 mr-2 text-coral" />
-            Upcoming Tasks ({incompleteTasks.length})
+            Tareas Pendientes ({incompleteTasks.length})
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {incompleteTasks.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
               <Circle className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-              <p>No upcoming tasks. Add one to get started!</p>
+              <p>No hay tareas pendientes. ¡Agrega una para comenzar!</p>
             </div>
           ) : (
             incompleteTasks.map((task) => (
@@ -123,7 +136,7 @@ export const TaskManager = () => {
                 </div>
                 <div className="flex items-center space-x-2">
                   <Badge className={getPriorityColor(task.priority)}>
-                    {task.priority}
+                    {translatePriority(task.priority)}
                   </Badge>
                   <Button
                     variant="ghost"
@@ -146,7 +159,7 @@ export const TaskManager = () => {
           <CardHeader>
             <CardTitle className="flex items-center text-charcoal">
               <CheckCircle className="w-5 h-5 mr-2 text-sage" />
-              Completed Tasks ({completedTasks.length})
+              Tareas Completadas ({completedTasks.length})
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">

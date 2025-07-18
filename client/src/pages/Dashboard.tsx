@@ -57,17 +57,17 @@ export const Dashboard = () => {
           </div>
           <div className="relative z-10">
             <h2 className="text-3xl font-bold mb-2">
-              Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 17 ? 'afternoon' : 'evening'}, {user?.displayName?.split(' ')[0] || 'Studier'}! 🌸
+              ¡{new Date().getHours() < 12 ? 'Buenos días' : new Date().getHours() < 17 ? 'Buenas tardes' : 'Buenas noches'}, {user?.displayName?.split(' ')[0] || 'Estudiante'}! 🌸
             </h2>
-            <p className="text-lg opacity-90 mb-6">Ready for a productive study session?</p>
+            <p className="text-lg opacity-90 mb-6">¿Listo para una sesión de estudio productiva?</p>
             <div className="flex items-center space-x-6 text-sm">
               <div className="flex items-center space-x-2">
                 <Clock className="w-4 h-4" />
-                <span>{Math.round(todayStudyTime * 10) / 10}h studied today</span>
+                <span>{Math.round(todayStudyTime * 10) / 10}h estudiadas hoy</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle className="w-4 h-4" />
-                <span>{completedTasksToday} tasks completed</span>
+                <span>{completedTasksToday} tareas completadas</span>
               </div>
             </div>
           </div>
@@ -92,7 +92,7 @@ export const Dashboard = () => {
             <CardContent className="p-6">
               <h4 className="text-lg font-semibold text-charcoal mb-4 flex items-center">
                 <CheckCircle className="w-5 h-5 mr-2 text-coral" />
-                Current Task
+                Tarea Actual
               </h4>
               {currentTask ? (
                 <div className="bg-gradient-to-r from-sunny to-peach rounded-2xl p-4">
@@ -100,14 +100,14 @@ export const Dashboard = () => {
                   <p className="text-sm text-gray-600 mb-3">{currentTask.description}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-gray-500">
-                      Priority: {currentTask.priority}
+                      Prioridad: {currentTask.priority === 'high' ? 'alta' : currentTask.priority === 'medium' ? 'media' : currentTask.priority === 'low' ? 'baja' : currentTask.priority}
                     </span>
                   </div>
                 </div>
               ) : (
                 <div className="text-center py-4 text-gray-500">
                   <CheckCircle className="w-8 h-8 mx-auto mb-2 text-gray-300" />
-                  <p>No active tasks</p>
+                  <p>No hay tareas activas</p>
                 </div>
               )}
             </CardContent>

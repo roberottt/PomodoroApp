@@ -43,14 +43,14 @@ export const Settings = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/settings", user?.uid] });
       toast({
-        title: "Settings saved!",
-        description: "Your preferences have been updated.",
+        title: "¡Configuración guardada!",
+        description: "Tus preferencias han sido actualizadas.",
       });
     },
     onError: () => {
       toast({
         title: "Error",
-        description: "Failed to save settings. Please try again.",
+        description: "No se pudo guardar la configuración. Por favor, inténtalo de nuevo.",
         variant: "destructive",
       });
     },
@@ -83,13 +83,13 @@ export const Settings = () => {
   };
 
   const weekdays = [
-    { value: "sunday", label: "Sunday" },
-    { value: "monday", label: "Monday" },
-    { value: "tuesday", label: "Tuesday" },
-    { value: "wednesday", label: "Wednesday" },
-    { value: "thursday", label: "Thursday" },
-    { value: "friday", label: "Friday" },
-    { value: "saturday", label: "Saturday" },
+    { value: "sunday", label: "Domingo" },
+    { value: "monday", label: "Lunes" },
+    { value: "tuesday", label: "Martes" },
+    { value: "wednesday", label: "Miércoles" },
+    { value: "thursday", label: "Jueves" },
+    { value: "friday", label: "Viernes" },
+    { value: "saturday", label: "Sábado" },
   ];
 
   return (
@@ -97,18 +97,18 @@ export const Settings = () => {
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-charcoal flex items-center">
           <SettingsIcon className="w-6 h-6 mr-3 text-coral" />
-          Study Settings
+          Configuración de Estudio
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Pomodoro Settings */}
           <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-charcoal">Pomodoro Timer</h3>
+            <h3 className="text-lg font-semibold text-charcoal">Temporizador Pomodoro</h3>
             <div className="space-y-4">
               <div>
                 <Label htmlFor="workDuration" className="text-sm font-medium text-gray-700">
-                  Work Session Duration
+                  Duración de la Sesión de Trabajo
                 </Label>
                 <Select
                   value={settings.workDuration.toString()}
@@ -118,17 +118,17 @@ export const Settings = () => {
                     <SelectValue placeholder="Select duration" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="25">25 minutes</SelectItem>
-                    <SelectItem value="30">30 minutes</SelectItem>
-                    <SelectItem value="45">45 minutes</SelectItem>
-                    <SelectItem value="60">60 minutes</SelectItem>
+                    <SelectItem value="25">25 minutos</SelectItem>
+                    <SelectItem value="30">30 minutos</SelectItem>
+                    <SelectItem value="45">45 minutos</SelectItem>
+                    <SelectItem value="60">60 minutos</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
               <div>
                 <Label htmlFor="shortBreak" className="text-sm font-medium text-gray-700">
-                  Short Break Duration
+                  Duración del Descanso Corto
                 </Label>
                 <Select
                   value={settings.shortBreakDuration.toString()}
@@ -138,16 +138,16 @@ export const Settings = () => {
                     <SelectValue placeholder="Select duration" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="5">5 minutes</SelectItem>
-                    <SelectItem value="10">10 minutes</SelectItem>
-                    <SelectItem value="15">15 minutes</SelectItem>
+                    <SelectItem value="5">5 minutos</SelectItem>
+                    <SelectItem value="10">10 minutos</SelectItem>
+                    <SelectItem value="15">15 minutos</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
               <div>
                 <Label htmlFor="longBreak" className="text-sm font-medium text-gray-700">
-                  Long Break Duration
+                  Duración del Descanso Largo
                 </Label>
                 <Select
                   value={settings.longBreakDuration.toString()}
@@ -157,9 +157,9 @@ export const Settings = () => {
                     <SelectValue placeholder="Select duration" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="15">15 minutes</SelectItem>
-                    <SelectItem value="20">20 minutes</SelectItem>
-                    <SelectItem value="30">30 minutes</SelectItem>
+                    <SelectItem value="15">15 minutos</SelectItem>
+                    <SelectItem value="20">20 minutos</SelectItem>
+                    <SelectItem value="30">30 minutos</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -168,11 +168,11 @@ export const Settings = () => {
 
           {/* Study Schedule */}
           <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-charcoal">Study Schedule</h3>
+            <h3 className="text-lg font-semibold text-charcoal">Horario de Estudio</h3>
             <div className="space-y-4">
               <div>
                 <Label htmlFor="dailyGoal" className="text-sm font-medium text-gray-700">
-                  Daily Study Goal
+                  Meta de Estudio Diaria
                 </Label>
                 <Select
                   value={settings.dailyGoal.toString()}
@@ -182,17 +182,17 @@ export const Settings = () => {
                     <SelectValue placeholder="Select goal" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="2">2 hours</SelectItem>
-                    <SelectItem value="4">4 hours</SelectItem>
-                    <SelectItem value="6">6 hours</SelectItem>
-                    <SelectItem value="8">8 hours</SelectItem>
+                    <SelectItem value="2">2 horas</SelectItem>
+                    <SelectItem value="4">4 horas</SelectItem>
+                    <SelectItem value="6">6 horas</SelectItem>
+                    <SelectItem value="8">8 horas</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
               <div>
                 <Label className="text-sm font-medium text-gray-700 mb-2 block">
-                  Rest Days
+                  Días de Descanso
                 </Label>
                 <div className="grid grid-cols-2 gap-2">
                   {weekdays.map((day) => (
@@ -220,7 +220,7 @@ export const Settings = () => {
             className="bg-gradient-to-r from-coral to-pink text-white px-8 py-3 rounded-2xl font-medium hover:shadow-lg transition-shadow"
           >
             <Save className="w-4 h-4 mr-2" />
-            {updateSettingsMutation.isPending ? "Saving..." : "Save Settings"}
+            {updateSettingsMutation.isPending ? "Guardando..." : "Guardar Configuración"}
           </Button>
         </div>
       </CardContent>

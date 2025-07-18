@@ -16,7 +16,7 @@ export const Login = () => {
               <Brain className="w-8 h-8 text-white" />
             </div>
             <CardTitle className="text-3xl font-bold">StudyBuddy</CardTitle>
-            <p className="text-lg opacity-90 mt-2">Your Cute Pomodoro Study Companion</p>
+            <p className="text-lg opacity-90 mt-2">Tu Adorable Compañero de Estudio Pomodoro</p>
           </CardHeader>
           
           <CardContent className="p-8">
@@ -28,8 +28,8 @@ export const Login = () => {
                     <Clock className="w-5 h-5 text-coral" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-charcoal">Pomodoro Timer</h3>
-                    <p className="text-sm text-gray-600">Stay focused with customizable study sessions</p>
+                    <h3 className="font-semibold text-charcoal">Temporizador Pomodoro</h3>
+                    <p className="text-sm text-gray-600">Mantente enfocado con sesiones de estudio personalizables</p>
                   </div>
                 </div>
                 
@@ -38,8 +38,8 @@ export const Login = () => {
                     <Target className="w-5 h-5 text-sage" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-charcoal">Task Management</h3>
-                    <p className="text-sm text-gray-600">Organize and track your study goals</p>
+                    <h3 className="font-semibold text-charcoal">Gestión de Tareas</h3>
+                    <p className="text-sm text-gray-600">Organiza y rastrea tus objetivos de estudio</p>
                   </div>
                 </div>
                 
@@ -48,8 +48,8 @@ export const Login = () => {
                     <Heart className="w-5 h-5 text-peach" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-charcoal">Mood Tracking</h3>
-                    <p className="text-sm text-gray-600">Monitor your wellbeing and progress</p>
+                    <h3 className="font-semibold text-charcoal">Seguimiento del Estado de Ánimo</h3>
+                    <p className="text-sm text-gray-600">Monitorea tu bienestar y progreso</p>
                   </div>
                 </div>
               </div>
@@ -73,7 +73,7 @@ export const Login = () => {
                 {loading ? (
                   <>
                     <div className="w-5 h-5 mr-3 animate-spin border-2 border-white border-t-transparent rounded-full"></div>
-                    Signing in...
+                    Iniciando sesión...
                   </>
                 ) : (
                   <>
@@ -95,13 +95,13 @@ export const Login = () => {
                         d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                       />
                     </svg>
-                    Continue with Google
+                    Continuar con Google
                   </>
                 )}
               </Button>
 
               <p className="text-center text-sm text-gray-600">
-                Sign in to save your progress and sync across devices
+                Inicia sesión para guardar tu progreso y sincronizar entre dispositivos
               </p>
             </div>
           </CardContent>

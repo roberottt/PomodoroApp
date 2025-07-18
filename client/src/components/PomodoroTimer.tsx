@@ -29,13 +29,13 @@ export const PomodoroTimer = ({
   const getModeDisplay = () => {
     switch (mode) {
       case "focus":
-        return "Focus Time";
+        return "Tiempo de Enfoque";
       case "short-break":
-        return "Short Break";
+        return "Descanso Corto";
       case "long-break":
-        return "Long Break";
+        return "Descanso Largo";
       default:
-        return "Focus Time";
+        return "Tiempo de Enfoque";
     }
   };
 
@@ -45,7 +45,7 @@ export const PomodoroTimer = ({
         <div className="text-center">
           <h3 className="text-2xl font-bold text-charcoal mb-6 flex items-center justify-center space-x-2">
             <span className="text-2xl">🍅</span>
-            <span>Pomodoro Timer</span>
+            <span>Temporizador Pomodoro</span>
           </h3>
           
           {/* Timer Display */}
@@ -69,7 +69,7 @@ export const PomodoroTimer = ({
               className="bg-sage hover:bg-sage/80 text-white px-6 py-3 rounded-full font-medium transition-colors"
             >
               <Play className="w-4 h-4 mr-2" />
-              Start
+              Iniciar
             </Button>
             <Button 
               onClick={pauseTimer}
@@ -77,7 +77,7 @@ export const PomodoroTimer = ({
               className="bg-coral hover:bg-coral/80 text-white px-6 py-3 rounded-full font-medium transition-colors"
             >
               <Pause className="w-4 h-4 mr-2" />
-              Pause
+              Pausar
             </Button>
             <Button 
               onClick={resetTimer}
@@ -85,7 +85,7 @@ export const PomodoroTimer = ({
               className="bg-gray-400 hover:bg-gray-500 text-white px-6 py-3 rounded-full font-medium transition-colors"
             >
               <RotateCcw className="w-4 h-4 mr-2" />
-              Reset
+              Reiniciar
             </Button>
           </div>
           
@@ -93,11 +93,11 @@ export const PomodoroTimer = ({
           <div className="flex justify-center space-x-6 text-sm text-gray-600">
             <div className="flex items-center space-x-2">
               <span>⏰</span>
-              <span>Work: {workDuration}min</span>
+              <span>Trabajo: {workDuration}min</span>
             </div>
             <div className="flex items-center space-x-2">
               <span>☕</span>
-              <span>Break: {shortBreakDuration}min</span>
+              <span>Descanso: {shortBreakDuration}min</span>
             </div>
           </div>
         </div>
