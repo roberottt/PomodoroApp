@@ -24,10 +24,39 @@ export const Layout = ({ children }: LayoutProps) => {
             </div>
             
             <nav className="hidden md:flex space-x-8">
-              <a href="#dashboard" className="text-charcoal hover:text-coral transition-colors font-medium">Panel</a>
-              <a href="#timer" className="text-charcoal hover:text-coral transition-colors font-medium">Temporizador</a>
-              <a href="#calendar" className="text-charcoal hover:text-coral transition-colors font-medium">Calendario</a>
-              <a href="#analytics" className="text-charcoal hover:text-coral transition-colors font-medium">Análisis</a>
+              <button 
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="text-charcoal hover:text-coral transition-colors font-medium"
+              >
+                Panel
+              </button>
+              <button 
+                onClick={() => {
+                  const timerElement = document.querySelector('[data-section="timer"]');
+                  timerElement?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="text-charcoal hover:text-coral transition-colors font-medium"
+              >
+                Temporizador
+              </button>
+              <button 
+                onClick={() => {
+                  const calendarElement = document.getElementById('calendar');
+                  calendarElement?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="text-charcoal hover:text-coral transition-colors font-medium"
+              >
+                Calendario
+              </button>
+              <button 
+                onClick={() => {
+                  const analyticsElement = document.getElementById('analytics');
+                  analyticsElement?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="text-charcoal hover:text-coral transition-colors font-medium"
+              >
+                Análisis
+              </button>
             </nav>
             
             <div className="flex items-center space-x-4">
