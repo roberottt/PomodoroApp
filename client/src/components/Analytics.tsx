@@ -37,7 +37,7 @@ export const Analytics = () => {
   const focusSessions = completedSessions.filter(s => s.type === 'focus');
   const totalStudyHours = focusSessions.reduce((total, session) => total + session.duration, 0) / 60;
   const completedTasks = tasks.filter(t => t.completed);
-
+  
   // Calculate session completion rate (daily)
   const today = new Date().toDateString();
   const todaysFocusSessions = focusSessions.filter(session => 
@@ -45,7 +45,7 @@ export const Analytics = () => {
   );
   const userSessionCount = settings?.sessionCount || 4;
   const sessionCompletionRate = Math.round((todaysFocusSessions.length / userSessionCount) * 100);
-
+  
   // Recent mood (last 7 days)
   const recentMoods = moods.slice(0, 7);
   const moodValues = { happy: 5, good: 4, neutral: 3, tired: 2, stressed: 1 };
@@ -67,14 +67,14 @@ export const Analytics = () => {
     const date = new Date();
     date.setDate(date.getDate() - i);
     const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
-
+    
     const daySessions = focusSessions.filter(session => {
       const sessionDate = new Date(session.startTime);
       return sessionDate.toDateString() === date.toDateString();
     });
-
+    
     const hours = daySessions.reduce((total, session) => total + session.duration, 0) / 60;
-
+    
     return {
       day: dayName,
       hours: Math.round(hours * 10) / 10,
@@ -145,40 +145,24 @@ export const Analytics = () => {
 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Weekly Study Hours Chart */}
+        {/* Study Hours Chart */}
         <Card className="rounded-3xl shadow-lg border-pink-100">
-          <CardHeader className="p-4 sm:p-6">
-            <CardTitle className="text-lg sm:text-xl font-semibold text-charcoal">
+          <CardHeader>
+            <CardTitle className="text-xl font-semibold text-charcoal">
               Horas de Estudio Semanales
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-4 sm:p-6">
-            <div className="h-48 sm:h-56 lg:h-64">
-              {weeklyData.some(d => d.hours > 0) ? (
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={weeklyData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="day" 
-                      fontSize={12}
-                      tick={{ fontSize: 12 }}
-                    />
-                    <YAxis 
-                      fontSize={12}
-                      tick={{ fontSize: 12 }}
-                    />
-                    <Tooltip />
-                    <Bar dataKey="hours" fill="#FF6B6B" />
-                  </BarChart>
-                </ResponsiveContainer>
-              ) : (
-                <div className="flex items-center justify-center h-full text-gray-500">
-                  <div className="text-center">
-                    <Clock className="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-4 text-gray-300" />
-                    <p className="text-sm sm:text-base">Comienza a estudiar para ver tus estadísticas</p>
-                  </div>
-                </div>
-              )}
+          <CardContent>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={weeklyData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="day" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="hours" fill="#FF8B94" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>

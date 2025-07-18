@@ -8,7 +8,7 @@ import { Play, Pause, RotateCcw } from "lucide-react";
 
 export const PomodoroTimer = () => {
   const { user } = useAuth();
-
+  
   // Get settings from Firebase
   const { data: settings } = useQuery({
     queryKey: ["/api/settings", user?.uid],
@@ -49,48 +49,74 @@ export const PomodoroTimer = () => {
 
   return (
     <Card className="rounded-3xl shadow-lg border-pink-100">
-      <CardContent className="p-4 sm:p-6 lg:p-8 text-center">
-        <div className="space-y-4 sm:space-y-6">
-          <div>
-            <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-charcoal mb-2">
-              {getModeDisplay()}
-            </h2>
-            <div className="text-4xl sm:text-5xl lg:text-6xl font-mono font-bold text-coral mb-4">
-              {formatTime(timeLeft)}
+      <CardContent className="pt-8">
+        <div className="text-center">
+          <h3 className="text-2xl font-bold text-charcoal mb-6 flex items-center justify-center space-x-2">
+            <span className="text-2xl">🍅</span>
+            <span>Temporizador Pomodoro</span>
+          </h3>
+          
+          {/* Timer Display */}
+          <div className="relative mb-8">
+            <div className="w-64 h-64 mx-auto bg-gradient-to-br from-coral to-pink rounded-full flex items-center justify-center shadow-2xl">
+              <div className="text-center">
+                <div className="text-5xl font-bold text-black mb-2">{formatTime}</div>
+                <div className="text-sm text-black/80 uppercase tracking-wide">{getModeDisplay()}</div>
+                <div className="text-xs text-black/60 mt-2">
+                  Sesión {currentSession} de {sessionCount}
+                </div>
+                <div className="text-xs text-black/60">
+                  Completadas: {completedSessions}
+                </div>
+              </div>
             </div>
-            <p className="text-sm sm:text-base text-gray-600">
-              Sesión {currentSession} de {sessionCount} • {completedSessions} completadas
-            </p>
+            {/* Cute decorative elements */}
+            <div className="absolute -top-4 -right-4 text-2xl">🌺</div>
+            <div className="absolute -bottom-4 -left-4 text-2xl">🌿</div>
           </div>
-
-          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-            <Button
-              onClick={isRunning ? pauseTimer : startTimer}
-              size="lg"
-              className="bg-coral hover:bg-coral/90 text-white px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold shadow-lg w-full sm:w-auto"
+          
+          {/* Timer Controls */}
+          <div className="flex justify-center space-x-4 mb-6">
+            <Button 
+              onClick={startTimer}
+              disabled={isRunning}
+              className="bg-sage hover:bg-sage/80 text-white px-6 py-3 rounded-full font-medium transition-colors"
             >
-              {isRunning ? (
-                <>
-                  <Pause className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  Pausar
-                </>
-              ) : (
-                <>
-                  <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  Iniciar
-                </>
-              )}
+              <Play className="w-4 h-4 mr-2" />
+              Iniciar
             </Button>
-
-            <Button
-              onClick={resetTimer}
-              variant="outline"
-              size="lg"
-              className="border-coral text-coral hover:bg-coral hover:text-white px-4 sm:px-6 py-3 rounded-full font-semibold w-full sm:w-auto"
+            <Button 
+              onClick={pauseTimer}
+              disabled={!isRunning}
+              className="bg-coral hover:bg-coral/80 text-white px-6 py-3 rounded-full font-medium transition-colors"
             >
-              <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+              <Pause className="w-4 h-4 mr-2" />
+              Pausar
+            </Button>
+            <Button 
+              onClick={resetTimer}
+              variant="secondary"
+              className="bg-gray-400 hover:bg-gray-500 text-white px-6 py-3 rounded-full font-medium transition-colors"
+            >
+              <RotateCcw className="w-4 h-4 mr-2" />
               Reiniciar
             </Button>
+          </div>
+          
+          {/* Timer Settings */}
+          <div className="flex justify-center space-x-4 text-sm text-gray-600">
+            <div className="flex items-center space-x-2">
+              <span>⏰</span>
+              <span>Trabajo: {workDuration}min</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span>☕</span>
+              <span>Descanso: {shortBreakDuration}min</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span>🍅</span>
+              <span>Sesiones: {sessionCount}</span>
+            </div>
           </div>
         </div>
       </CardContent>
