@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
-import { getUserStudySessions, getUserMoods, getUserTasks } from "@/lib/firestore";
+import { getUserStudySessions, getUserMoods, getUserTasks, getUserSettings } from "@/lib/firestore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
 import { Clock, Target, CheckCircle, Heart, TrendingUp } from "lucide-react";
@@ -26,6 +26,12 @@ export const Analytics = () => {
     enabled: !!user?.uid,
   });
 
+  const { data: settings } = useQuery({
+    queryKey: ["/api/settings", user?.uid],
+    queryFn: () => getUserSettings(user!.uid),
+    enabled: !!user?.uid,
+  });
+
   // Calculate statistics
   const completedSessions = sessions.filter(s => s.completed);
   const focusSessions = completedSessions.filter(s => s.type === 'focus');
@@ -37,7 +43,8 @@ export const Analytics = () => {
   const todaysFocusSessions = focusSessions.filter(session => 
     session.startTime.toDateString() === today
   );
-  const sessionCompletionRate = Math.round((todaysFocusSessions.length / 4) * 100); // Assuming 4 sessions per day as default
+  const userSessionCount = settings?.sessionCount || 4;
+  const sessionCompletionRate = Math.round((todaysFocusSessions.length / userSessionCount) * 100);
   
   // Recent mood (last 7 days)
   const recentMoods = moods.slice(0, 7);
@@ -97,7 +104,7 @@ export const Analytics = () => {
     },
     {
       title: "Sesiones Hoy",
-      value: `${todaysFocusSessions.length}/4`,
+      value: `${todaysFocusSessions.length}/${userSessionCount}`,
       icon: CheckCircle,
       color: "bg-peach",
       change: `${sessionCompletionRate}%`,

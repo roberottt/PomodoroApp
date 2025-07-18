@@ -123,16 +123,52 @@ export const createStudySession = async (userId: string, session: Omit<InsertStu
 };
 
 export const getUserStudySessions = async (userId: string): Promise<StudySession[]> => {
-  const q = query(
-    collection(db, "studySessions"), 
-    where("userId", "==", userId),
-    orderBy("startTime", "desc")
-  );
-  const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.map(doc => ({
-    id: doc.id,
-    ...convertTimestamps(doc.data())
-  })) as StudySession[];
+  try {
+    // First try with orderBy
+    const q = query(
+      collection(db, "studySessions"),
+      where("userId", "==", userId),
+      orderBy("startTime", "desc")
+    );
+
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      startTime: doc.data().startTime.toDate(),
+      endTime: doc.data().endTime?.toDate(),
+    })) as StudySession[];
+  } catch (error) {
+    console.error("Error fetching study sessions:", error);
+
+    // Fallback without orderBy
+    try {
+      console.log("Retrying study sessions without orderBy...");
+      const fallbackQ = query(
+        collection(db, "studySessions"),
+        where("userId", "==", userId)
+      );
+
+      const fallbackSnapshot = await getDocs(fallbackQ);
+      const sessions = fallbackSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        startTime: doc.data().startTime.toDate(),
+        endTime: doc.data().endTime?.toDate(),
+      })) as StudySession[];
+
+      console.log("Found", sessions.length, "study sessions (no orderBy)");
+
+      // Sort manually by startTime descending
+      sessions.sort((a, b) => b.startTime.getTime() - a.startTime.getTime());
+
+      console.log("Returning fallback study sessions:", sessions);
+      return sessions;
+    } catch (fallbackError) {
+      console.error("Fallback query also failed:", fallbackError);
+      return [];
+    }
+  }
 };
 
 export const updateStudySession = async (sessionId: string, updates: Partial<StudySession>) => {
@@ -168,7 +204,7 @@ export const getUserMoods = async (userId: string): Promise<Mood[]> => {
 export const getUserSettings = async (userId: string): Promise<Settings | null> => {
   const docRef = doc(db, "settings", userId);
   const docSnap = await getDoc(docRef);
-  
+
   if (docSnap.exists()) {
     return {
       userId,

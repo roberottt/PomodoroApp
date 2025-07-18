@@ -3,14 +3,13 @@ import { createStudySession, updateStudySession } from "@/lib/firestore";
 
 export type TimerMode = "focus" | "short-break" | "long-break";
 
-export const useTimer = (userId: string | null, workDuration: number = 25, shortBreakDuration: number = 5, longBreakDuration: number = 15) => {
+export const useTimer = (userId: string | null, workDuration: number = 25, shortBreakDuration: number = 5, longBreakDuration: number = 15, sessionCount: number = 4) => {
   const [timeLeft, setTimeLeft] = useState(workDuration * 60); // Convert to seconds
   const [isRunning, setIsRunning] = useState(false);
   const [mode, setMode] = useState<TimerMode>("focus");
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const [currentSession, setCurrentSession] = useState(1);
   const [completedSessions, setCompletedSessions] = useState(0);
-  const [sessionCount, setSessionCount] = useState(4);
 
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
@@ -117,6 +116,5 @@ export const useTimer = (userId: string | null, workDuration: number = 25, short
     resetTimer,
     setMode,
     setTimeLeft: (duration: number) => setTimeLeft(duration * 60),
-    setSessionCount,
   };
 };
