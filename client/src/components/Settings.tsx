@@ -21,6 +21,7 @@ export const Settings = () => {
     workDuration: 25,
     shortBreakDuration: 5,
     longBreakDuration: 15,
+    sessionCount: 4,
     dailyGoal: 4,
     restDays: ["sunday"],
     notifications: true,
@@ -69,6 +70,7 @@ export const Settings = () => {
         workDuration: userSettings.workDuration,
         shortBreakDuration: userSettings.shortBreakDuration,
         longBreakDuration: userSettings.longBreakDuration,
+        sessionCount: userSettings.sessionCount,
         dailyGoal: userSettings.dailyGoal,
         restDays: userSettings.restDays,
         notifications: userSettings.notifications,
@@ -207,6 +209,30 @@ export const Settings = () => {
                   className="w-full mt-1 px-3 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
                   placeholder="15"
                 />
+              </div>
+              
+              <div>
+                <Label htmlFor="sessionCount" className="text-sm font-medium text-gray-700">
+                  Número de Sesiones Pomodoro
+                </Label>
+                <Select
+                  value={settings.sessionCount.toString()}
+                  onValueChange={(value) => setSettings({ ...settings, sessionCount: parseInt(value) })}
+                >
+                  <SelectTrigger className="w-full mt-1 border-pink-200 focus:ring-coral rounded-xl">
+                    <SelectValue placeholder="Seleccionar sesiones" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1">1 sesión</SelectItem>
+                    <SelectItem value="2">2 sesiones</SelectItem>
+                    <SelectItem value="3">3 sesiones</SelectItem>
+                    <SelectItem value="4">4 sesiones</SelectItem>
+                    <SelectItem value="5">5 sesiones</SelectItem>
+                    <SelectItem value="6">6 sesiones</SelectItem>
+                    <SelectItem value="8">8 sesiones</SelectItem>
+                    <SelectItem value="10">10 sesiones</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>

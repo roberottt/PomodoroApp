@@ -32,6 +32,13 @@ export const Analytics = () => {
   const totalStudyHours = focusSessions.reduce((total, session) => total + session.duration, 0) / 60;
   const completedTasks = tasks.filter(t => t.completed);
   
+  // Calculate session completion rate (daily)
+  const today = new Date().toDateString();
+  const todaysFocusSessions = focusSessions.filter(session => 
+    session.startTime.toDateString() === today
+  );
+  const sessionCompletionRate = Math.round((todaysFocusSessions.length / 4) * 100); // Assuming 4 sessions per day as default
+  
   // Recent mood (last 7 days)
   const recentMoods = moods.slice(0, 7);
   const moodValues = { happy: 5, good: 4, neutral: 3, tired: 2, stressed: 1 };
@@ -89,11 +96,11 @@ export const Analytics = () => {
       change: "+8%",
     },
     {
-      title: "Tareas Completadas",
-      value: completedTasks.length,
+      title: "Sesiones Hoy",
+      value: `${todaysFocusSessions.length}/4`,
       icon: CheckCircle,
       color: "bg-peach",
-      change: "+25%",
+      change: `${sessionCompletionRate}%`,
     },
     {
       title: "Estado de Ánimo Promedio",

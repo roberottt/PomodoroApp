@@ -53,6 +53,7 @@ export const settingsSchema = z.object({
   workDuration: z.number().default(25), // in minutes
   shortBreakDuration: z.number().default(5), // in minutes
   longBreakDuration: z.number().default(15), // in minutes
+  sessionCount: z.number().default(4), // number of pomodoro sessions to complete
   dailyGoal: z.number().default(4), // in hours
   restDays: z.array(z.enum(["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"])).default(["sunday"]),
   ambientSound: z.string().optional(),

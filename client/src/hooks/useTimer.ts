@@ -8,6 +8,9 @@ export const useTimer = (userId: string | null, workDuration: number = 25, short
   const [isRunning, setIsRunning] = useState(false);
   const [mode, setMode] = useState<TimerMode>("focus");
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
+  const [currentSession, setCurrentSession] = useState(1);
+  const [completedSessions, setCompletedSessions] = useState(0);
+  const [sessionCount, setSessionCount] = useState(4);
 
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
@@ -17,9 +20,9 @@ export const useTimer = (userId: string | null, workDuration: number = 25, short
 
   const startTimer = useCallback(async () => {
     if (!userId) return;
-    
+
     setIsRunning(true);
-    
+
     // Create a new study session
     const session = await createStudySession(userId, {
       type: mode,
@@ -27,7 +30,7 @@ export const useTimer = (userId: string | null, workDuration: number = 25, short
       completed: false,
       startTime: new Date(),
     });
-    
+
     setCurrentSessionId(session.id);
   }, [userId, mode, timeLeft]);
 
@@ -39,6 +42,8 @@ export const useTimer = (userId: string | null, workDuration: number = 25, short
     setIsRunning(false);
     setTimeLeft(workDuration * 60);
     setCurrentSessionId(null);
+    setCurrentSession(1);
+    setCompletedSessions(0);
   }, [workDuration]);
 
   const completeSession = useCallback(async () => {
@@ -47,6 +52,7 @@ export const useTimer = (userId: string | null, workDuration: number = 25, short
         completed: true,
         endTime: new Date(),
       });
+      setCompletedSessions((prev) => prev + 1);
     }
   }, [currentSessionId, userId]);
 
@@ -61,14 +67,21 @@ export const useTimer = (userId: string | null, workDuration: number = 25, short
       // Timer completed
       setIsRunning(false);
       completeSession();
-      
-      // Auto-switch to break mode
+
+      // Auto-switch to break mode or next session
       if (mode === "focus") {
-        setMode("short-break");
-        setTimeLeft(shortBreakDuration * 60);
+        if (currentSession < sessionCount) {
+          setMode("short-break");
+          setTimeLeft(shortBreakDuration * 60);
+        } else {
+          // All sessions completed
+          setMode("focus");
+          setTimeLeft(workDuration * 60);
+        }
       } else if (mode === "short-break") {
         setMode("focus");
         setTimeLeft(workDuration * 60);
+        setCurrentSession((prev) => prev + 1);
       } else {
         setMode("focus");
         setTimeLeft(workDuration * 60);
@@ -76,7 +89,7 @@ export const useTimer = (userId: string | null, workDuration: number = 25, short
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, timeLeft, mode, workDuration, shortBreakDuration, longBreakDuration, completeSession]);
+  }, [isRunning, timeLeft, mode, workDuration, shortBreakDuration, longBreakDuration, completeSession, currentSession, sessionCount]);
 
   // Reset timer when settings change (only if not running)
   useEffect(() => {
@@ -95,11 +108,15 @@ export const useTimer = (userId: string | null, workDuration: number = 25, short
     timeLeft,
     isRunning,
     mode,
+    currentSession,
+    completedSessions,
+    sessionCount,
     formatTime: formatTime(timeLeft),
     startTimer,
     pauseTimer,
     resetTimer,
     setMode,
     setTimeLeft: (duration: number) => setTimeLeft(duration * 60),
+    setSessionCount,
   };
 };

@@ -20,16 +20,19 @@ export const PomodoroTimer = () => {
   const workDuration = settings?.workDuration || 25;
   const shortBreakDuration = settings?.shortBreakDuration || 5;
   const longBreakDuration = settings?.longBreakDuration || 15;
+  const sessionCount = settings?.sessionCount || 4;
 
   const {
     timeLeft,
     isRunning,
     mode,
+    currentSession,
+    completedSessions,
     formatTime,
     startTimer,
     pauseTimer,
     resetTimer,
-  } = useTimer(user?.uid || null, workDuration, shortBreakDuration, longBreakDuration);
+  } = useTimer(user?.uid || null, workDuration, shortBreakDuration, longBreakDuration, sessionCount);
 
   const getModeDisplay = () => {
     switch (mode) {
@@ -59,6 +62,12 @@ export const PomodoroTimer = () => {
               <div className="text-center">
                 <div className="text-5xl font-bold text-black mb-2">{formatTime}</div>
                 <div className="text-sm text-black/80 uppercase tracking-wide">{getModeDisplay()}</div>
+                <div className="text-xs text-black/60 mt-2">
+                  Sesión {currentSession} de {sessionCount}
+                </div>
+                <div className="text-xs text-black/60">
+                  Completadas: {completedSessions}
+                </div>
               </div>
             </div>
             {/* Cute decorative elements */}
@@ -95,7 +104,7 @@ export const PomodoroTimer = () => {
           </div>
           
           {/* Timer Settings */}
-          <div className="flex justify-center space-x-6 text-sm text-gray-600">
+          <div className="flex justify-center space-x-4 text-sm text-gray-600">
             <div className="flex items-center space-x-2">
               <span>⏰</span>
               <span>Trabajo: {workDuration}min</span>
@@ -103,6 +112,10 @@ export const PomodoroTimer = () => {
             <div className="flex items-center space-x-2">
               <span>☕</span>
               <span>Descanso: {shortBreakDuration}min</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span>🍅</span>
+              <span>Sesiones: {sessionCount}</span>
             </div>
           </div>
         </div>
