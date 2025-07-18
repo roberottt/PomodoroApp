@@ -50,7 +50,7 @@ export const Dashboard = () => {
   return (
     <div className="space-y-8">
       {/* Welcome Section */}
-      <Card className="bg-gradient-to-r from-coral to-pink-300 rounded-3xl border-none text-white relative overflow-hidden">
+      <Card className="bg-gradient-to-r from-coral to-pink-300 rounded-3xl border-none text-black relative overflow-hidden">
         <CardContent className="p-8">
           <div className="absolute right-4 top-4 opacity-20">
             <Book className="w-16 h-16" />
