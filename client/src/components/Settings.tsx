@@ -5,7 +5,7 @@ import { getUserSettings, updateUserSettings, createUserSettings } from "@/lib/f
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import { Settings as SettingsIcon, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -108,60 +108,50 @@ export const Settings = () => {
             <div className="space-y-4">
               <div>
                 <Label htmlFor="workDuration" className="text-sm font-medium text-gray-700">
-                  Duración de la Sesión de Trabajo
+                  Duración de la Sesión de Trabajo (minutos)
                 </Label>
-                <Select
-                  value={settings.workDuration.toString()}
-                  onValueChange={(value) => setSettings({ ...settings, workDuration: parseInt(value) })}
-                >
-                  <SelectTrigger className="w-full mt-1 border-pink-200 focus:ring-coral rounded-xl">
-                    <SelectValue placeholder="Select duration" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="25">25 minutos</SelectItem>
-                    <SelectItem value="30">30 minutos</SelectItem>
-                    <SelectItem value="45">45 minutos</SelectItem>
-                    <SelectItem value="60">60 minutos</SelectItem>
-                  </SelectContent>
-                </Select>
+                <input
+                  id="workDuration"
+                  type="number"
+                  min="1"
+                  max="120"
+                  value={settings.workDuration}
+                  onChange={(e) => setSettings({ ...settings, workDuration: parseInt(e.target.value) || 1 })}
+                  className="w-full mt-1 px-3 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
+                  placeholder="25"
+                />
               </div>
               
               <div>
                 <Label htmlFor="shortBreak" className="text-sm font-medium text-gray-700">
-                  Duración del Descanso Corto
+                  Duración del Descanso Corto (minutos)
                 </Label>
-                <Select
-                  value={settings.shortBreakDuration.toString()}
-                  onValueChange={(value) => setSettings({ ...settings, shortBreakDuration: parseInt(value) })}
-                >
-                  <SelectTrigger className="w-full mt-1 border-pink-200 focus:ring-coral rounded-xl">
-                    <SelectValue placeholder="Select duration" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="5">5 minutos</SelectItem>
-                    <SelectItem value="10">10 minutos</SelectItem>
-                    <SelectItem value="15">15 minutos</SelectItem>
-                  </SelectContent>
-                </Select>
+                <input
+                  id="shortBreak"
+                  type="number"
+                  min="1"
+                  max="60"
+                  value={settings.shortBreakDuration}
+                  onChange={(e) => setSettings({ ...settings, shortBreakDuration: parseInt(e.target.value) || 1 })}
+                  className="w-full mt-1 px-3 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
+                  placeholder="5"
+                />
               </div>
               
               <div>
                 <Label htmlFor="longBreak" className="text-sm font-medium text-gray-700">
-                  Duración del Descanso Largo
+                  Duración del Descanso Largo (minutos)
                 </Label>
-                <Select
-                  value={settings.longBreakDuration.toString()}
-                  onValueChange={(value) => setSettings({ ...settings, longBreakDuration: parseInt(value) })}
-                >
-                  <SelectTrigger className="w-full mt-1 border-pink-200 focus:ring-coral rounded-xl">
-                    <SelectValue placeholder="Select duration" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="15">15 minutos</SelectItem>
-                    <SelectItem value="20">20 minutos</SelectItem>
-                    <SelectItem value="30">30 minutos</SelectItem>
-                  </SelectContent>
-                </Select>
+                <input
+                  id="longBreak"
+                  type="number"
+                  min="1"
+                  max="120"
+                  value={settings.longBreakDuration}
+                  onChange={(e) => setSettings({ ...settings, longBreakDuration: parseInt(e.target.value) || 1 })}
+                  className="w-full mt-1 px-3 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent"
+                  placeholder="15"
+                />
               </div>
             </div>
           </div>
