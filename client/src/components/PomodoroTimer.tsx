@@ -20,7 +20,6 @@ export const PomodoroTimer = () => {
   const workDuration = settings?.workDuration || 25;
   const shortBreakDuration = settings?.shortBreakDuration || 5;
   const longBreakDuration = settings?.longBreakDuration || 15;
-  const sessionCount = settings?.sessionCount || 4;
 
   const {
     timeLeft,
@@ -30,9 +29,7 @@ export const PomodoroTimer = () => {
     startTimer,
     pauseTimer,
     resetTimer,
-    completedSessions,
-    totalSessions,
-  } = useTimer(user?.uid || null, workDuration, shortBreakDuration, longBreakDuration, sessionCount);
+  } = useTimer(user?.uid || null, workDuration, shortBreakDuration, longBreakDuration);
 
   const getModeDisplay = () => {
     switch (mode) {
@@ -62,11 +59,6 @@ export const PomodoroTimer = () => {
               <div className="text-center">
                 <div className="text-5xl font-bold text-black mb-2">{formatTime}</div>
                 <div className="text-sm text-black/80 uppercase tracking-wide">{getModeDisplay()}</div>
-                {mode === "focus" && (
-                  <div className="text-xs text-black/70 mt-1">
-                    Sesión {completedSessions + 1} de {totalSessions}
-                  </div>
-                )}
               </div>
             </div>
             {/* Cute decorative elements */}
@@ -103,7 +95,7 @@ export const PomodoroTimer = () => {
           </div>
           
           {/* Timer Settings */}
-          <div className="flex justify-center space-x-4 text-sm text-gray-600">
+          <div className="flex justify-center space-x-6 text-sm text-gray-600">
             <div className="flex items-center space-x-2">
               <span>⏰</span>
               <span>Trabajo: {workDuration}min</span>
@@ -111,10 +103,6 @@ export const PomodoroTimer = () => {
             <div className="flex items-center space-x-2">
               <span>☕</span>
               <span>Descanso: {shortBreakDuration}min</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <span>🔄</span>
-              <span>Sesiones: {sessionCount}</span>
             </div>
           </div>
         </div>
