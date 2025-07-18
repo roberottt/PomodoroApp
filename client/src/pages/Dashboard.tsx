@@ -78,11 +78,7 @@ export const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8" data-section="timer">
         {/* Pomodoro Timer */}
         <div className="lg:col-span-2">
-          <PomodoroTimer
-            workDuration={settings?.workDuration || 25}
-            shortBreakDuration={settings?.shortBreakDuration || 5}
-            longBreakDuration={settings?.longBreakDuration || 15}
-          />
+          <PomodoroTimer />
         </div>
 
         {/* Quick Actions */}

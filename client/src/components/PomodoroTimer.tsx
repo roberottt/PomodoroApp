@@ -1,21 +1,26 @@
 import { useTimer } from "@/hooks/useTimer";
 import { useAuth } from "@/hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import { getUserSettings } from "@/lib/firestore";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Play, Pause, RotateCcw } from "lucide-react";
 
-interface PomodoroTimerProps {
-  workDuration?: number;
-  shortBreakDuration?: number;
-  longBreakDuration?: number;
-}
-
-export const PomodoroTimer = ({ 
-  workDuration = 25, 
-  shortBreakDuration = 5, 
-  longBreakDuration = 15 
-}: PomodoroTimerProps) => {
+export const PomodoroTimer = () => {
   const { user } = useAuth();
+  
+  // Get settings from Firebase
+  const { data: settings } = useQuery({
+    queryKey: ["/api/settings", user?.uid],
+    queryFn: () => getUserSettings(user!.uid),
+    enabled: !!user?.uid,
+  });
+
+  // Use settings or default values
+  const workDuration = settings?.workDuration || 25;
+  const shortBreakDuration = settings?.shortBreakDuration || 5;
+  const longBreakDuration = settings?.longBreakDuration || 15;
+
   const {
     timeLeft,
     isRunning,
@@ -24,7 +29,7 @@ export const PomodoroTimer = ({
     startTimer,
     pauseTimer,
     resetTimer,
-  } = useTimer(user?.uid || null, workDuration);
+  } = useTimer(user?.uid || null, workDuration, shortBreakDuration, longBreakDuration);
 
   const getModeDisplay = () => {
     switch (mode) {

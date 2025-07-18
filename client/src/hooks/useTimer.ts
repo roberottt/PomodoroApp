@@ -3,8 +3,8 @@ import { createStudySession, updateStudySession } from "@/lib/firestore";
 
 export type TimerMode = "focus" | "short-break" | "long-break";
 
-export const useTimer = (userId: string | null, initialDuration: number = 25) => {
-  const [timeLeft, setTimeLeft] = useState(initialDuration * 60); // Convert to seconds
+export const useTimer = (userId: string | null, workDuration: number = 25, shortBreakDuration: number = 5, longBreakDuration: number = 15) => {
+  const [timeLeft, setTimeLeft] = useState(workDuration * 60); // Convert to seconds
   const [isRunning, setIsRunning] = useState(false);
   const [mode, setMode] = useState<TimerMode>("focus");
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
@@ -37,9 +37,9 @@ export const useTimer = (userId: string | null, initialDuration: number = 25) =>
 
   const resetTimer = useCallback(() => {
     setIsRunning(false);
-    setTimeLeft(initialDuration * 60);
+    setTimeLeft(workDuration * 60);
     setCurrentSessionId(null);
-  }, [initialDuration]);
+  }, [workDuration]);
 
   const completeSession = useCallback(async () => {
     if (currentSessionId && userId) {
@@ -65,15 +65,31 @@ export const useTimer = (userId: string | null, initialDuration: number = 25) =>
       // Auto-switch to break mode
       if (mode === "focus") {
         setMode("short-break");
-        setTimeLeft(5 * 60); // 5 minutes break
+        setTimeLeft(shortBreakDuration * 60);
+      } else if (mode === "short-break") {
+        setMode("focus");
+        setTimeLeft(workDuration * 60);
       } else {
         setMode("focus");
-        setTimeLeft(initialDuration * 60);
+        setTimeLeft(workDuration * 60);
       }
     }
 
     return () => clearInterval(interval);
-  }, [isRunning, timeLeft, mode, initialDuration, completeSession]);
+  }, [isRunning, timeLeft, mode, workDuration, shortBreakDuration, longBreakDuration, completeSession]);
+
+  // Reset timer when settings change (only if not running)
+  useEffect(() => {
+    if (!isRunning) {
+      if (mode === "focus") {
+        setTimeLeft(workDuration * 60);
+      } else if (mode === "short-break") {
+        setTimeLeft(shortBreakDuration * 60);
+      } else if (mode === "long-break") {
+        setTimeLeft(longBreakDuration * 60);
+      }
+    }
+  }, [workDuration, shortBreakDuration, longBreakDuration, mode, isRunning]);
 
   return {
     timeLeft,
