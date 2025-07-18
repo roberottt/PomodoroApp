@@ -21,7 +21,6 @@ export const Calendar = () => {
 
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(currentDate);
-  const calendarDays = eachDayOfInterval({ start: monthStart, end: monthEnd });
 
   const previousMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
@@ -89,40 +88,65 @@ export const Calendar = () => {
           ))}
           
           {/* Calendar days */}
-          {calendarDays.map((day) => {
-            const dayEvents = getEventsForDay(day);
-            const isToday = isSameDay(day, new Date());
+          {(() => {
+            const monthStart = startOfMonth(currentDate);
+            const monthEnd = endOfMonth(currentDate);
             
-            return (
-              <div
-                key={day.toISOString()}
-                className={`h-24 rounded-lg p-2 transition-colors cursor-pointer ${
-                  isToday
-                    ? "bg-coral/20 border-2 border-coral"
-                    : "bg-warmGray hover:bg-pink-50"
-                }`}
-              >
-                <div className={`text-sm font-medium ${
-                  isToday ? "text-coral" : "text-charcoal"
-                }`}>
-                  {format(day, "d")}
+            // Get the first day of the calendar grid (might be from previous month)
+            const startDate = new Date(monthStart);
+            const dayOfWeek = startDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
+            startDate.setDate(startDate.getDate() - dayOfWeek);
+            
+            // Get the last day of the calendar grid (might be from next month)
+            const endDate = new Date(monthEnd);
+            const daysToAdd = 6 - endDate.getDay();
+            endDate.setDate(endDate.getDate() + daysToAdd);
+            
+            // Generate all days for the calendar grid
+            const allCalendarDays = eachDayOfInterval({ start: startDate, end: endDate });
+            
+            return allCalendarDays.map((day) => {
+              const dayEvents = getEventsForDay(day);
+              const isToday = isSameDay(day, new Date());
+              const isCurrentMonth = isSameMonth(day, currentDate);
+              
+              return (
+                <div
+                  key={day.toISOString()}
+                  className={`h-24 rounded-lg p-2 transition-colors cursor-pointer ${
+                    isToday
+                      ? "bg-coral/20 border-2 border-coral"
+                      : isCurrentMonth
+                      ? "bg-warmGray hover:bg-pink-50"
+                      : "bg-gray-100 hover:bg-gray-150"
+                  }`}
+                >
+                  <div className={`text-sm font-medium ${
+                    isToday 
+                      ? "text-coral" 
+                      : isCurrentMonth 
+                      ? "text-charcoal" 
+                      : "text-gray-400"
+                  }`}>
+                    {format(day, "d")}
+                  </div>
+                  <div className="space-y-1">
+                    {dayEvents.slice(0, 2).map((event) => (
+                      <div
+                        key={event.id}
+                        className="h-1 bg-coral rounded-full w-full"
+                      />
+                    ))}
+                    {dayEvents.length > 2 && (
+                      <div className="text-xs text-gray-500">
+                        +{dayEvents.length - 2} more
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="space-y-1">
-                  {dayEvents.slice(0, 2).map((event) => (
-                    <div
-                      key={event.id}
-                      className="h-1 bg-coral rounded-full w-full"
-                    />
-                  ))}
-                  {dayEvents.length > 2 && (
-                    <div className="text-xs text-gray-500">
-                      +{dayEvents.length - 2} more
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+              );
+            });
+          })()}
         </div>
 
         {/* Upcoming Events */}
