@@ -24,10 +24,10 @@ export const Layout = ({ children }: LayoutProps) => {
             </div>
             
             <nav className="hidden md:flex space-x-8">
-              <a href="#dashboard" className="text-charcoal hover:text-coral transition-colors font-medium">Dashboard</a>
-              <a href="#timer" className="text-charcoal hover:text-coral transition-colors font-medium">Timer</a>
-              <a href="#calendar" className="text-charcoal hover:text-coral transition-colors font-medium">Calendar</a>
-              <a href="#analytics" className="text-charcoal hover:text-coral transition-colors font-medium">Analytics</a>
+              <a href="#dashboard" className="text-charcoal hover:text-coral transition-colors font-medium">Panel</a>
+              <a href="#timer" className="text-charcoal hover:text-coral transition-colors font-medium">Temporizador</a>
+              <a href="#calendar" className="text-charcoal hover:text-coral transition-colors font-medium">Calendario</a>
+              <a href="#analytics" className="text-charcoal hover:text-coral transition-colors font-medium">Análisis</a>
             </nav>
             
             <div className="flex items-center space-x-4">
@@ -48,7 +48,7 @@ export const Layout = ({ children }: LayoutProps) => {
                 onClick={logout}
                 className="text-charcoal hover:text-coral"
               >
-                Logout
+                Cerrar Sesión
               </Button>
             </div>
           </div>

@@ -9,11 +9,11 @@ import { useToast } from "@/hooks/use-toast";
 import type { InsertMood } from "@shared/schema";
 
 const moodOptions = [
-  { value: "happy", emoji: "😊", label: "Happy" },
-  { value: "good", emoji: "🙂", label: "Good" },
+  { value: "happy", emoji: "😊", label: "Feliz" },
+  { value: "good", emoji: "🙂", label: "Bien" },
   { value: "neutral", emoji: "😐", label: "Neutral" },
-  { value: "tired", emoji: "😕", label: "Tired" },
-  { value: "stressed", emoji: "😞", label: "Stressed" },
+  { value: "tired", emoji: "😕", label: "Cansado" },
+  { value: "stressed", emoji: "😞", label: "Estresado" },
 ] as const;
 
 export const MoodTracker = () => {
@@ -33,8 +33,8 @@ export const MoodTracker = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/moods", user?.uid] });
       toast({
-        title: "Mood logged!",
-        description: "Your mood has been saved for today.",
+        title: "¡Estado de ánimo registrado!",
+        description: "Tu estado de ánimo ha sido guardado para hoy.",
       });
     },
   });
@@ -67,7 +67,7 @@ export const MoodTracker = () => {
       <CardHeader>
         <CardTitle className="flex items-center text-lg font-semibold text-charcoal">
           <Heart className="w-5 h-5 mr-2 text-coral" />
-          How are you feeling?
+          ¿Cómo te sientes?
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -77,7 +77,7 @@ export const MoodTracker = () => {
               {moodOptions.find(option => option.value === selectedMood)?.emoji}
             </div>
             <p className="text-sm text-gray-600">
-              You logged your mood as {moodOptions.find(option => option.value === selectedMood)?.label} today
+              Registraste tu estado de ánimo como {moodOptions.find(option => option.value === selectedMood)?.label} hoy
             </p>
           </div>
         ) : (

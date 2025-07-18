@@ -75,32 +75,32 @@ export const Analytics = () => {
 
   const stats = [
     {
-      title: "Total Study Time",
+      title: "Tiempo Total de Estudio",
       value: `${Math.round(totalStudyHours * 10) / 10}h`,
       icon: Clock,
       color: "bg-coral",
       change: "+12%",
     },
     {
-      title: "Pomodoro Sessions",
+      title: "Sesiones Pomodoro",
       value: focusSessions.length,
       icon: Target,
       color: "bg-sage",
       change: "+8%",
     },
     {
-      title: "Tasks Completed",
+      title: "Tareas Completadas",
       value: completedTasks.length,
       icon: CheckCircle,
       color: "bg-peach",
       change: "+25%",
     },
     {
-      title: "Average Mood",
+      title: "Estado de Ánimo Promedio",
       value: getMoodEmoji(averageMood),
       icon: Heart,
       color: "bg-sunny",
-      change: "Stable",
+      change: "Estable",
     },
   ];
 
@@ -108,7 +108,7 @@ export const Analytics = () => {
     <div className="space-y-8">
       <div className="flex items-center space-x-3">
         <TrendingUp className="w-6 h-6 text-coral" />
-        <h2 className="text-2xl font-bold text-charcoal">Analytics & Reports</h2>
+        <h2 className="text-2xl font-bold text-charcoal">Análisis e Informes</h2>
       </div>
 
       {/* Stats Cards */}
@@ -135,7 +135,7 @@ export const Analytics = () => {
         <Card className="rounded-3xl shadow-lg border-pink-100">
           <CardHeader>
             <CardTitle className="text-xl font-semibold text-charcoal">
-              Weekly Study Hours
+              Horas de Estudio Semanales
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -157,7 +157,7 @@ export const Analytics = () => {
         <Card className="rounded-3xl shadow-lg border-pink-100">
           <CardHeader>
             <CardTitle className="text-xl font-semibold text-charcoal">
-              Mood Trend
+              Tendencia del Estado de Ánimo
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -182,7 +182,7 @@ export const Analytics = () => {
                 <div className="flex items-center justify-center h-full text-gray-500">
                   <div className="text-center">
                     <Heart className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                    <p>Start tracking your mood to see trends</p>
+                    <p>Comienza a registrar tu estado de ánimo para ver tendencias</p>
                   </div>
                 </div>
               )}

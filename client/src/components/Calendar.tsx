@@ -46,7 +46,7 @@ export const Calendar = () => {
         <div className="flex items-center justify-between">
           <CardTitle className="text-2xl font-bold text-charcoal flex items-center">
             <CalendarDays className="w-6 h-6 mr-3 text-coral" />
-            Calendar
+            Calendario
           </CardTitle>
           <div className="flex items-center space-x-4">
             <Button
@@ -54,7 +54,7 @@ export const Calendar = () => {
               className="bg-gradient-to-r from-coral to-pink text-white px-4 py-2 rounded-xl hover:shadow-lg transition-shadow flex items-center space-x-2"
             >
               <Plus className="w-4 h-4" />
-              <span>Add Event</span>
+              <span>Agregar Evento</span>
             </Button>
             <Button
               variant="ghost"
@@ -82,7 +82,7 @@ export const Calendar = () => {
         {/* Calendar Grid */}
         <div className="grid grid-cols-7 gap-1 mb-8">
           {/* Day headers */}
-          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+          {["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"].map((day) => (
             <div key={day} className="text-center text-sm font-medium text-gray-600 py-2">
               {day}
             </div>
@@ -127,12 +127,12 @@ export const Calendar = () => {
 
         {/* Upcoming Events */}
         <div>
-          <h4 className="text-lg font-semibold text-charcoal mb-4">Upcoming Events</h4>
+          <h4 className="text-lg font-semibold text-charcoal mb-4">Próximos Eventos</h4>
           <div className="space-y-3">
             {upcomingEvents.length === 0 ? (
               <div className="text-center py-4 text-gray-500">
                 <CalendarDays className="w-8 h-8 mx-auto mb-2 text-gray-300" />
-                <p>No upcoming events</p>
+                <p>No hay próximos eventos</p>
               </div>
             ) : (
               upcomingEvents.map((event) => (
