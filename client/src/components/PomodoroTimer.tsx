@@ -28,7 +28,7 @@ export const PomodoroTimer = () => {
     mode,
     currentSession,
     completedSessions,
-    formatTime: formattedTime,
+    formatTime,
     startTimer,
     pauseTimer,
     resetTimer,
@@ -56,7 +56,7 @@ export const PomodoroTimer = () => {
               {getModeDisplay()}
             </h2>
             <div className="text-4xl sm:text-5xl lg:text-6xl font-mono font-bold text-coral mb-4">
-              {formattedTime}
+              {formatTime(timeLeft)}
             </div>
             <p className="text-sm sm:text-base text-gray-600">
               Sesión {currentSession} de {sessionCount} • {completedSessions} completadas
