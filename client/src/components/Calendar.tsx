@@ -193,7 +193,7 @@ export const Calendar = () => {
 
         {/* Upcoming Events */}
         <div>
-          <h4 className="text-lg font-semibold text-charcoal mb-4">Próximos Eventos</h4></div>
+          <h4 className="text-lg font-semibold text-charcoal mb-4">Próximos Eventos</h4>
           <div className="space-y-3">
             {upcomingEvents.length === 0 ? (
               <div className="text-center py-4 text-gray-500">
