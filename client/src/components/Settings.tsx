@@ -199,6 +199,22 @@ export const Settings = () => {
                   ))}
                 </div>
               </div>
+
+              <div>
+                <Label className="text-sm font-medium text-gray-700 mb-2 block">
+                  Notificaciones
+                </Label>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="notifications"
+                    checked={settings.notifications}
+                    onCheckedChange={(checked) => setSettings({ ...settings, notifications: checked as boolean })}
+                  />
+                  <Label htmlFor="notifications" className="text-sm">
+                    Recibir notificaciones de las sesiones
+                  </Label>
+                </div>
+              </div>
             </div>
           </div>
         </div>

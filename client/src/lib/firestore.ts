@@ -6,6 +6,7 @@ import {
   deleteDoc, 
   getDocs, 
   getDoc,
+  setDoc,
   query, 
   where, 
   orderBy, 
@@ -191,7 +192,7 @@ export const createUserSettings = async (userId: string, settings: InsertSetting
     userId,
     updatedAt: new Date(),
   };
-  await updateDoc(doc(db, "settings", userId), settingsData);
+  await setDoc(doc(db, "settings", userId), settingsData);
   return settingsData;
 };
 
