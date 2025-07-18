@@ -32,8 +32,8 @@ export const TaskModal = ({ isOpen, onClose }: TaskModalProps) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/tasks", user?.uid] });
       toast({
-        title: "Success",
-        description: "Task created successfully!",
+        title: "Éxito",
+        description: "¡Tarea creada exitosamente!",
       });
       onClose();
       setFormData({
@@ -46,7 +46,7 @@ export const TaskModal = ({ isOpen, onClose }: TaskModalProps) => {
     onError: (error) => {
       toast({
         title: "Error",
-        description: "Failed to create task. Please try again.",
+        description: "Error al crear la tarea. Por favor, inténtalo de nuevo.",
         variant: "destructive",
       });
     },
@@ -57,7 +57,7 @@ export const TaskModal = ({ isOpen, onClose }: TaskModalProps) => {
     if (!formData.title.trim()) {
       toast({
         title: "Error",
-        description: "Please enter a task title.",
+        description: "Por favor, ingresa un título para la tarea.",
         variant: "destructive",
       });
       return;
@@ -69,38 +69,38 @@ export const TaskModal = ({ isOpen, onClose }: TaskModalProps) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md rounded-3xl">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-charcoal">Add New Task</DialogTitle>
+          <DialogTitle className="text-xl font-bold text-charcoal">Agregar Nueva Tarea</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label htmlFor="title" className="text-sm font-medium text-gray-700">
-              Task Title
+              Título de la Tarea
             </Label>
             <Input
               id="title"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              placeholder="Enter task title"
+              placeholder="Ingresa el título de la tarea"
               className="mt-1 border-pink-200 focus:ring-coral focus:border-coral rounded-xl"
             />
           </div>
           
           <div>
             <Label htmlFor="description" className="text-sm font-medium text-gray-700">
-              Description
+              Descripción
             </Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Task description"
+              placeholder="Descripción de la tarea"
               className="mt-1 border-pink-200 focus:ring-coral focus:border-coral rounded-xl h-20"
             />
           </div>
           
           <div>
             <Label htmlFor="priority" className="text-sm font-medium text-gray-700">
-              Priority
+              Prioridad
             </Label>
             <Select
               value={formData.priority}
@@ -109,12 +109,12 @@ export const TaskModal = ({ isOpen, onClose }: TaskModalProps) => {
               }
             >
               <SelectTrigger className="mt-1 border-pink-200 focus:ring-coral focus:border-coral rounded-xl">
-                <SelectValue placeholder="Select priority" />
+                <SelectValue placeholder="Selecciona prioridad" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="low">Low</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="high">High</SelectItem>
+                <SelectItem value="low">Baja</SelectItem>
+                <SelectItem value="medium">Media</SelectItem>
+                <SelectItem value="high">Alta</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -126,14 +126,14 @@ export const TaskModal = ({ isOpen, onClose }: TaskModalProps) => {
               onClick={onClose}
               className="text-gray-600 hover:text-gray-800"
             >
-              Cancel
+              Cancelar
             </Button>
             <Button
               type="submit"
               disabled={createTaskMutation.isPending}
               className="bg-gradient-to-r from-coral to-pink text-white px-6 py-2 rounded-xl hover:shadow-lg transition-shadow"
             >
-              {createTaskMutation.isPending ? "Adding..." : "Add Task"}
+              {createTaskMutation.isPending ? "Agregando..." : "Agregar Tarea"}
             </Button>
           </div>
         </form>
