@@ -52,8 +52,8 @@ export const PomodoroTimer = ({
           <div className="relative mb-8">
             <div className="w-64 h-64 mx-auto bg-gradient-to-br from-coral to-pink rounded-full flex items-center justify-center shadow-2xl">
               <div className="text-center">
-                <div className="text-5xl font-bold text-white mb-2">{formatTime}</div>
-                <div className="text-sm text-white/80 uppercase tracking-wide">{getModeDisplay()}</div>
+                <div className="text-5xl font-bold text-black mb-2">{formatTime}</div>
+                <div className="text-sm text-black/80 uppercase tracking-wide">{getModeDisplay()}</div>
               </div>
             </div>
             {/* Cute decorative elements */}
