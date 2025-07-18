@@ -3,11 +3,13 @@ import { createStudySession, updateStudySession } from "@/lib/firestore";
 
 export type TimerMode = "focus" | "short-break" | "long-break";
 
-export const useTimer = (userId: string | null, workDuration: number = 25, shortBreakDuration: number = 5, longBreakDuration: number = 15) => {
+export const useTimer = (userId: string | null, workDuration: number = 25, shortBreakDuration: number = 5, longBreakDuration: number = 15, sessionCount: number = 4) => {
   const [timeLeft, setTimeLeft] = useState(workDuration * 60); // Convert to seconds
   const [isRunning, setIsRunning] = useState(false);
   const [mode, setMode] = useState<TimerMode>("focus");
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
+  const [completedSessions, setCompletedSessions] = useState(0);
+  const [totalSessions, setTotalSessions] = useState(sessionCount);
 
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
@@ -39,6 +41,8 @@ export const useTimer = (userId: string | null, workDuration: number = 25, short
     setIsRunning(false);
     setTimeLeft(workDuration * 60);
     setCurrentSessionId(null);
+    setCompletedSessions(0);
+    setMode("focus");
   }, [workDuration]);
 
   const completeSession = useCallback(async () => {
@@ -62,14 +66,26 @@ export const useTimer = (userId: string | null, workDuration: number = 25, short
       setIsRunning(false);
       completeSession();
       
-      // Auto-switch to break mode
+      // Auto-switch logic with session tracking
       if (mode === "focus") {
-        setMode("short-break");
-        setTimeLeft(shortBreakDuration * 60);
-      } else if (mode === "short-break") {
-        setMode("focus");
-        setTimeLeft(workDuration * 60);
-      } else {
+        const newCompletedSessions = completedSessions + 1;
+        setCompletedSessions(newCompletedSessions);
+        
+        if (newCompletedSessions >= totalSessions) {
+          // All sessions completed
+          setMode("long-break");
+          setTimeLeft(longBreakDuration * 60);
+          setCompletedSessions(0); // Reset for next cycle
+        } else if (newCompletedSessions % 4 === 0) {
+          // Long break every 4 sessions
+          setMode("long-break");
+          setTimeLeft(longBreakDuration * 60);
+        } else {
+          // Regular short break
+          setMode("short-break");
+          setTimeLeft(shortBreakDuration * 60);
+        }
+      } else if (mode === "short-break" || mode === "long-break") {
         setMode("focus");
         setTimeLeft(workDuration * 60);
       }
@@ -89,7 +105,8 @@ export const useTimer = (userId: string | null, workDuration: number = 25, short
         setTimeLeft(longBreakDuration * 60);
       }
     }
-  }, [workDuration, shortBreakDuration, longBreakDuration, mode, isRunning]);
+    setTotalSessions(sessionCount);
+  }, [workDuration, shortBreakDuration, longBreakDuration, sessionCount, mode, isRunning]);
 
   return {
     timeLeft,
@@ -101,5 +118,7 @@ export const useTimer = (userId: string | null, workDuration: number = 25, short
     resetTimer,
     setMode,
     setTimeLeft: (duration: number) => setTimeLeft(duration * 60),
+    completedSessions,
+    totalSessions,
   };
 };
